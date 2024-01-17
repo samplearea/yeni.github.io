@@ -37,7 +37,7 @@ Task 6
 id = checkWaypoint(id,42)
 
 
-*MODULE1*:
+*MODULE1.2*:
  Custom Data Types for an Orienteering System
 Vectors of Custom Objects
 Task 1 
@@ -61,7 +61,7 @@ id(1) = register(id(1),"Astrid",c(1))
 Task 4 
 id(2) = register(id(2),"Erik",c(1))
 
-*MODULE1*:
+*MODULE1.3*:
  Creating a New Class
 Creating a Class Definition
 Task 1 
