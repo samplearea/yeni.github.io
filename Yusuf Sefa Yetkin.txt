@@ -1,5 +1,5 @@
 OPP Matlap Kursu Final Sınavı
-Modul1:
+*MODULE1*:
  Custom Data Types for an Orienteering System
 Using Objects to Simulate an Event 
 
@@ -37,7 +37,7 @@ Task 6
 id = checkWaypoint(id,42)
 
 
-Modul1:
+*MODULE1*:
  Custom Data Types for an Orienteering System
 Vectors of Custom Objects
 Task 1 
@@ -61,7 +61,7 @@ id(1) = register(id(1),"Astrid",c(1))
 Task 4 
 id(2) = register(id(2),"Erik",c(1))
 
-Modul1:
+*MODULE1*:
  Creating a New Class
 Creating a Class Definition
 Task 1 
@@ -97,529 +97,474 @@ Task 4
 c = course
 lvl = c.Level
 
-% course Sınıf Tanımı
-% Bu sınıf, bir eğitim sistemindeki kursları temsil etmek için bir şablon
-% olarak kullanılır. Bir kursun başlık, eğitmen, program ve diğer ilgili
-% detayları gibi bilgilerini depolamak için kullanılabilen temel bir yapıdır.
+% Bir Olayı Simüle Etmek İçin Nesneleri Kullanma 
 
+
+ w = [42 123 124 163 168 666]; % Bu kod, etkileşimde kullanılmak üzere ara nokta sayılarından oluşan bir vektör oluşturur. 
+
+Task 1 % Yeni bir nesneyi (değişken), bu üç girişi kullanarak course fonksiyonunu çağırarak oluşturulabilir. 
+c = course("Family Fun","White",w)
+
+Task 2 % Bir katılımcı bir nesne oluşturmak için bir ID kayıt ettiğinde, ID  birçok bilgiyi içerir ilk oluşturulduğunda genellikle boştur. 
+% Bir ID çubuğunu temsil etmek için idstick fonksiyonunu, ID çubuğunun seri numarasını temsil eden tek bir girişle çağırarak bir nesne oluşturabilirsiniz.
+
+id = idstick(123456)
+
+Task 3 % Oluşturduğumuz değişkenler, course ve idstick adlı özel sınıfların nesneleridir. 
+whos
+
+Task 4 % Çalışma alanınızdaki bir nesnenin özelliklerinin (içerdikleri bilgilerin) isimlerini görmek için properties fonksiyonunu kullanabilirsiniz.
+% Benzer şekilde, nesnenizle çalışan metodların (fonksiyonların) isimlerini görmek için methods fonksiyonunu kullanabilirsiniz.
+properties(id)
+methods(id)
+
+Task 5 % ID  nesnelerinde "register" adında bir metod bulunmaktadır. Bu metod, bir katılımcının ID  ile bir nesneye kaydolmasını simüle eder. 
+id = register(id,"Astrid",c)
+
+Task 6 % ID  nesnelerinin aynı zamanda bir katılımcının bir yol noktasında kontrol yapmasını simüle etmek için bir metodları bulunmaktadır. Burada "waypt", yol noktasının numarasını temsil eder. 
+id = checkWaypoint(id,42)
+
+% Bir Etkinliği Simüle Etmek İçin Nesnelerin Vektörlerini Kullanma
+
+% Bu kod, yol noktası sayılarının vektörlerini ve bir rota nesnesini oluşturur.
+w1 = [42 123 124 163 168 666];
+w2 = [42 112:123 666];
+
+c = course("Family Fun","White",w1)
+whos c
+
+
+Task 1 % MATLAB'ın vektör tabanlı yapısını sürdürmek adına, bir etkinliği bir dizi parkur nesnesi ve bir dizi ID çubuğu olarak temsil etmek mantıklıdır.
+c(2) = course("Insanity","Red",w2) % Şu anda c skalar (tek elemanlı) bir parkur nesnesidir.
+
+Task 2 % Her idstick nesnesinin tek bir seri numarası vardır. Ancak, idstick fonksiyonunu bir dizi seri numarası ile çağırmak, her bir seri numarası için bir ID çubuğu oluşturacak şekilde bir dizi ID çubuğu oluşturacaktır.
+id = idstick([123456,567890,987654])
+
+Task 3 % Register fonksiyonuna girişlerin hepsi skalar olmalıdır. Ancak, bir nesne dizisine (obj(k)) diğer dizilerde olduğu gibi endeksleme yapabilirsiniz.
+id(1) = register(id(1),"Astrid",c(1))
+
+Task 4 % Birden fazla katılımcı, kendi ID çubuklarını kullanarak aynı anda aynı parkura kaydolabilir ve koşabilir.
+id(2) = register(id(2),"Erik",c(1))
+
+Task 5 % Kayıt işleminde olduğu gibi, ID çubukları da tek tek kontrol noktalarında kontrol edilir, bu nedenle checkWaypoint fonksiyonuna giden ilk giriş bir skalar idstick nesnesi olmalıdır.
+id(1) = checkWaypoint(id(1),42)
+
+*MODULE2.1*:
+% Özel Sınıf Oluşturma
+
+
+% Eğer bir sınıf tanımlama dosyanız (classname.m) varsa. Yeni bir değişken (OOP terimleriyle nesne) olan obj'yi classname türünde oluşturacaktır.
+Task 2 
+c = course
+
+% Özel nesnelerinizin özelliklerinde depolanan değerlere erişmek için MATLAB'teki diğer nesnelerle aynı şekilde object.Property indeksleme yöntemini kullanabilirsiniz.
+
+Task 3 
+c = course
+lvl = c.Level
+
+% Özellik değerlerini değiştirmek için object.Property'ye atama yapabilirsiniz.
+
+Task 4
+c.Level = "White"
+
+% Propertiylerimiz üzerinde kısıtlama yoktur, herhangi bir değeri veya veri türünü içerebilirler. 
+
+Task 6
+c.Level = 42
+% Yeni bir sınıf oluşturmak için classname adında bir sınıf tanımlama bloğu içeren bir (düz metin) kod dosyası oluşturun. Bu dosyanın adı classname.m olmalıdır.
 classdef course
-    % Sınıf özellikleri ve yöntemleri buraya eklenebilir. Bu özellikler
-    % ve yöntemler, course sınıfının karakteristiklerini ve davranışını
-    % tanımlamak için kullanılabilir.
+    % Sınıfınızın özelliklerini, sınıf tanımlamasındaki bir properties bloğu içinde özellik isimlerini listeleyerek tanımlayabilirsiniz:
+    properties
+        Name
+        Level
+        Waypoints
+    end 
 end
+*MODULE2.2*:
+% Bir Sınıfı Diğerinin İçinde Kullanmak
 
+% Bu kod, etkileşimde kullanılmak üzere bir kurs nesnesi oluşturur.
+c = course;
+c.Name = "Family Fun";
+c.Level = "White";
+c.Waypoints = [42 123 124 163 168 666]
 
+% Id değişkeninine  idstick classını tanımladıktan sonra SerialNumber değişkeninin değerini atıyoruz
 
+Task 1 
+id = idstick
+id.SerialNumber = 1234
 
+% Bir nesnenin özelliğinin değeri, başka nesneler de dahil olmak üzere herhangi bir boyutta veya türde olabilir.
 
+Task 2 
+id.Course = c
 
-% Course class definition
-% Bu sınıf, bir eğitim sistemindeki kursları temsil etmek için bir şablon
-% olarak kullanılır. Bir kursun başlık (Name), seviye (Level) ve rotadaki
-% kontrol noktalarını (Waypoints) depolamak için kullanılabilir.
+% Nokta indeksleme kullanarak özellik değerlerini çıkarabilirsiniz. Eğer özellik başka bir nesne içeriyorsa, onun üzerinde de nokta indekslemeyi kullanabilirsiniz.
 
+Task 3 
+w = id.Course.Waypoints
+% Kurs Class tanımı
 classdef course
     properties
-        Name        % Kursun adını temsil eden özellik.
-        Level       % Kursun seviyesini temsil eden özellik.
-        Waypoints   % Kursun rota üzerindeki kontrol noktalarını temsil eden özellik.
-    end
-end
-```
-
-Bu yorum bloğu, `course` sınıfının özelliklerinin ne işe yaradığını anlatan bir açıklama içerir. `Name` özelliği kursun adını, `Level` özelliği kursun seviyesini, ve `Waypoints` özelliği ise kursun rota üzerindeki kontrol noktalarını temsil eder. Bu özellikler, bir kursun temel bilgilerini depolamak için kullanılır.
-
-
-
-
-
-
-% ID Stick class definition
-% Bu sınıf, bir kimlik çubuğunu temsil etmek için kullanılır. Her bir
-% kimlik çubuğu bir seri numarası (SerialNumber), durumu (Status),
-% katılımcı bilgisi (Participant), bağlı olduğu kurs bilgisi (Course) ve
-% zaman damgalarını (Timestamps) içerebilir.
-
-classdef idstick
-    properties
-        SerialNumber    % Kimlik çubuğunun benzersiz seri numarasını temsil eden özellik.
-        Status          % Kimlik çubuğunun durumunu temsil eden özellik.
-        Participant     % Kimlik çubuğuna atanmış olan katılımcının bilgisini temsil eden özellik.
-        Course          % Kimlik çubuğunun bağlı olduğu kursun bilgisini temsil eden özellik.
-        Timestamps      % Kimlik çubuğuna ait zaman damgalarını temsil eden özellik.
-    end
-end
-
-
-
-
-
-% ID Stick class definition
-% Bu sınıf, bir kimlik çubuğunu temsil etmek için kullanılır. Her bir
-% kimlik çubuğu bir seri numarası (SerialNumber), durumu (Status),
-% katılımcı bilgisi (Participant), bağlı olduğu kurs bilgisi (Course) ve
-% zaman damgalarını (Timestamps) içerebilir. Ayrıca, bir işlev (signal)
-% içerir, bu işlev kimlik çubuğunun bir sinyal göndermesini sağlar.
-
-classdef idstick
-    properties
-        SerialNumber    % Kimlik çubuğunun benzersiz seri numarasını temsil eden özellik.
-        Status          % Kimlik çubuğunun durumunu temsil eden özellik.
-        Participant     % Kimlik çubuğuna atanmış olan katılımcının bilgisini temsil eden özellik.
-        Course          % Kimlik çubuğunun bağlı olduğu kursun bilgisini temsil eden özellik.
-        Timestamps      % Kimlik çubuğuna ait zaman damgalarını temsil eden özellik.
+        Name
+        Level
+        Waypoints
     end
     
-    methods
-        function signal(obj, ok)
-            % Bu işlev, kimlik çubuğunun bir sinyal göndermesini sağlar.
-            % Parametre "ok", sinyalin başarılı olup olmadığını belirtir.
-            if ok
-                disp("Beep");
-            else
-                disp("Buzz");
-            end
-        end
-    end
 end
 
+% Bir Classı Diğer Class ile kullanmak
 
-
-
-
-
-% ID Stick class definition
-% Bu sınıf, bir kimlik çubuğunu temsil etmek için kullanılır. Her bir
-% kimlik çubuğu bir seri numarası (SerialNumber), durumu (Status),
-% katılımcı bilgisi (Participant), bağlı olduğu kurs bilgisi (Course) ve
-% zaman damgalarını (Timestamps) içerebilir. Ayrıca, bir işlev (signal)
-% içerir, bu işlev kimlik çubuğunun bir sinyal göndermesini sağlar.
+% Sınıfınızın özelliklerini, sınıf tanımlamasındaki bir properties bloğu içinde özellik isimlerini listeleyerek tanımlayabilirsiniz
 
 classdef idstick
     properties
-        SerialNumber    % Kimlik çubuğunun benzersiz seri numarasını temsil eden özellik.
-        Status          % Kimlik çubuğunun durumunu temsil eden özellik.
-        Participant     % Kimlik çubuğuna atanmış olan katılımcının bilgisini temsil eden özellik.
-        Course          % Kimlik çubuğunun bağlı olduğu kursun bilgisini temsil eden özellik.
-        Timestamps      % Kimlik çubuğuna ait zaman damgalarını temsil eden özellik.
+        SerialNumber
+        Status
+        Participant
+        Course
+        Timestamps
     end
     
+end
+*MODULE2.3*:
+% Fonksiyon Ekleme
+
+%  Bu kod, etkileşimde kullanılmak üzere bir kurs nesnesi ve bir idstick nesnesi oluşturur.
+
+c = course;
+c.Name = "Family Fun";
+c.Level = "White";
+c.Waypoints = [42 123 124 163 168 666];
+
+id = idstick;
+id.SerialNumber = 1234
+
+
+
+% idstick.m dosyasının içerisindeki register fonksiyonuna değişken yolluyoruz.
+
+Task 1 
+idout = register(id,"Erik",c)
+
+% idstick.m dosyasındaki fonksiyonunun değişken isimlendirmelerini yapıyoruz. 
+ 
+Task 2 
+p1 = id.Participant
+p2 = idout.Participant
+% Fonksiyon Ekleme
+
+% Bu kod, etkileşimde kullanılmak üzere bir kurs nesnesi ve bir idstick nesnesi oluşturur.
+c = course;
+c.Name = "Family Fun";
+c.Level = "White";
+c.Waypoints = [42 123 124 163 168 666];
+
+id = idstick;
+id.SerialNumber = 1234;
+id.Course = c;
+id.Status = "Ready"
+
+% Herhangi bir işlevi çağırdığınız gibi, belirli bir nesne üzerinde bir yöntemi çağırabilirsiniz.
+
+Task 1 
+signal(id,true)
+
+ % ID Stick Class tanımlaması
+
+
+
+classdef idstick
+    properties
+        SerialNumber
+        Status
+        Participant
+        Course
+        Timestamps
+    end
+    
+% Sınıfınızın metodlarını, sınıf tanımlamasındaki bir methods bloğu içinde standart fonksiyon bildirimi sözdizimini kullanarak tanımlayabilirsiniz. Bir metodun ilk girişi her zaman nesne olacaktır.
+
     methods
-        function signal(id, ok)
-            % Bu işlev, kimlik çubuğunun bir sinyal göndermesini sağlar.
-            % Parametre "ok", sinyalin başarılı olup olmadığını belirtir.
-            % "id" parametresi, kimlik çubuğunu temsil eder.
+         function signal(id,ok)
             if ok
-                % Eğer sinyal başarılıysa
-                if (id.Status == "Ready") || (id.Status == "Done")
-                    % Eğer kimlik çubuğunun durumu "Ready" veya "Done" ise
-                    disp("Beep beep");
+            % Nesne bir giriş olarak geçirildiği için, metod, düzenli nokta indeksleme kullanarak nesnenin tüm özelliklerine erişebilir.
+            
+                if (id.Status == "Ready") || (id.Status == "Done") 
+                    disp("Beep beep")
                 else
-                    % Aksi durumda
-                    disp("Beep");
+                    disp("Beep")
                 end
             else
-                % Eğer sinyal başarısızsa
-                disp("Buzz");
-            end
-        end
-    end
-end
-
-Bu yorum bloğu, idstick sınıfının özelliklerini (properties) ve sınıfın içinde bulunan bir işlevi (methods) anlatır. signal işlevi, kimlik çubuğunun bir sinyal göndermesini kontrol eder ve başarılı veya başarısız duruma göre ekrana "Beep" veya "Buzz" mesajı yazdırır.
-
-
-
-
-% ID Stick class definition
-% Bu sınıf, bir kimlik çubuğunu temsil etmek için kullanılır. Her bir
-% kimlik çubuğu bir seri numarası (SerialNumber), durumu (Status),
-% katılımcı bilgisi (Participant), bağlı olduğu kurs bilgisi (Course) ve
-% zaman damgalarını (Timestamps) içerebilir. Ayrıca, bir işlev (signal)
-% içerir, bu işlev kimlik çubuğunun bir sinyal göndermesini sağlar.
-
-classdef idstick
-    properties
-        SerialNumber    % Kimlik çubuğunun benzersiz seri numarasını temsil eden özellik.
-        Status          % Kimlik çubuğunun durumunu temsil eden özellik.
-        Participant     % Kimlik çubuğuna atanmış olan katılımcının bilgisini temsil eden özellik.
-        Course          % Kimlik çubuğunun bağlı olduğu kursun bilgisini temsil eden özellik.
-        Timestamps      % Kimlik çubuğuna ait zaman damgalarını temsil eden özellik.
-    end
-    
-    methods
-        function signal(id, ok)
-            % Bu işlev, kimlik çubuğunun bir sinyal göndermesini sağlar.
-            % Parametre "ok", sinyalin başarılı olup olmadığını belirtir.
-            % "id" parametresi, kimlik çubuğunu temsil eder.
-            if ok
-                % Eğer sinyal başarılıysa
-                if (id.Status == "Ready") || (id.Status == "Done")
-                    % Eğer kimlik çubuğunun durumu "Ready" veya "Done" ise
-                    disp("Beep beep");
-                else
-                    % Aksi durumda
-                    disp("Beep");
-                end
-            else
-                % Eğer sinyal başarısızsa
-                disp("Buzz");
-            end
-        end
-    end
-end
-```
-
-Bu yorum bloğu, `idstick` sınıfının özelliklerini (properties) ve sınıfın içinde bulunan bir işlevi (methods) anlatır. `signal` işlevi, kimlik çubuğunun bir sinyal göndermesini kontrol eder ve başarılı veya başarısız duruma göre farklı mesajlar yazdırır. Eğer sinyal başarılıysa ve kimlik çubuğunun durumu "Ready" veya "Done" ise "Beep beep", aksi durumda "Beep" yazdırır. Başarısız durumda ise "Buzz" mesajı gösterilir.
-
-
-
-
-% ID Stick class definition
-% Bu sınıf, bir kimlik çubuğunu temsil etmek için kullanılır. Her bir
-% kimlik çubuğu bir seri numarası (SerialNumber), durumu (Status),
-% katılımcı bilgisi (Participant), bağlı olduğu kurs bilgisi (Course) ve
-% zaman damgalarını (Timestamps) içerebilir. Ayrıca, iki işlev içerir:
-% birincisi (signal) kimlik çubuğunun bir sinyal göndermesini sağlar,
-% ikincisi (register) ise kimlik çubuğunu kaydedip katılımcı ve kurs
-% bilgilerini günceller.
-
-classdef idstick
-    properties
-        SerialNumber    % Kimlik çubuğunun benzersiz seri numarasını temsil eden özellik.
-        Status          % Kimlik çubuğunun durumunu temsil eden özellik.
-        Participant     % Kimlik çubuğuna atanmış olan katılımcının bilgisini temsil eden özellik.
-        Course          % Kimlik çubuğunun bağlı olduğu kursun bilgisini temsil eden özellik.
-        Timestamps      % Kimlik çubuğuna ait zaman damgalarını temsil eden özellik.
-    end
-    
-    methods
-        function signal(id, ok)
-            % Bu işlev, kimlik çubuğunun bir sinyal göndermesini sağlar.
-            % Parametre "ok", sinyalin başarılı olup olmadığını belirtir.
-            % "id" parametresi, kimlik çubuğunu temsil eder.
-            if ok
-                % Eğer sinyal başarılıysa
-                if (id.Status == "Ready") || (id.Status == "Done")
-                    % Eğer kimlik çubuğunun durumu "Ready" veya "Done" ise
-                    disp("Beep beep");
-                else
-                    % Aksi durumda
-                    disp("Beep");
-                end
-            else
-                % Eğer sinyal başarısızsa
-                disp("Buzz");
+                disp("Buzz")
             end
         end
 
-        function id = register(id, name, course)
-            % Bu işlev, kimlik çubuğunu kaydedip katılımcı ve kurs bilgilerini günceller.
-            % Parametre "name", katılımcının adını, "course" ise bağlı olduğu kursu temsil eder.
+        % Daha Fazla Fonksiyon Ekleme
+        
+        function id = register(id,name,course)
             id.Participant = name;
             id.Course = course;
-        end
-    end
-end
-
-Bu yorum bloğu, idstick sınıfının özelliklerini (properties) ve sınıfın içinde bulunan iki işlevini (methods) anlatır. signal işlevi, kimlik çubuğunun bir sinyal göndermesini kontrol eder ve başarılı veya başarısız duruma göre farklı mesajlar yazdırır. register işlevi ise kimlik çubuğunu kaydedip katılımcı ve kurs bilgilerini günceller.
-
-
-
-
-% ID Stick class definition
-% Bu sınıf, bir kimlik çubuğunu temsil etmek için kullanılır. Her bir
-% kimlik çubuğu bir seri numarası (SerialNumber), durumu (Status),
-% katılımcı bilgisi (Participant), bağlı olduğu kurs bilgisi (Course) ve
-% zaman damgalarını (Timestamps) içerebilir. Ayrıca, iki işlev içerir:
-% birincisi (signal) kimlik çubuğunun bir sinyal göndermesini sağlar,
-% ikincisi (register) ise kimlik çubuğunu kaydedip katılımcı ve kurs
-% bilgilerini günceller, aynı zamanda başlangıç durumunu "Ready" olarak
-% ayarlar ve bir sinyal gönderir.
-
-classdef idstick
-    properties
-        SerialNumber    % Kimlik çubuğunun benzersiz seri numarasını temsil eden özellik.
-        Status          % Kimlik çubuğunun durumunu temsil eden özellik.
-        Participant     % Kimlik çubuğuna atanmış olan katılımcının bilgisini temsil eden özellik.
-        Course          % Kimlik çubuğunun bağlı olduğu kursun bilgisini temsil eden özellik.
-        Timestamps      % Kimlik çubuğuna ait zaman damgalarını temsil eden özellik.
-    end
-    
-    methods
-        function signal(id, ok)
-            % Bu işlev, kimlik çubuğunun bir sinyal göndermesini sağlar.
-            % Parametre "ok", sinyalin başarılı olup olmadığını belirtir.
-            % "id" parametresi, kimlik çubuğunu temsil eder.
-            if ok
-                % Eğer sinyal başarılıysa
-                if (id.Status == "Ready") || (id.Status == "Done")
-                    % Eğer kimlik çubuğunun durumu "Ready" veya "Done" ise
-                    disp("Beep beep");
-                else
-                    % Aksi durumda
-                    disp("Beep");
-                end
-            else
-                % Eğer sinyal başarısızsa
-                disp("Buzz");
-            end
-        end
-
-        function id = register(id, name, course)
-            % Bu işlev, kimlik çubuğunu kaydedip katılımcı ve kurs bilgilerini günceller.
-            % Aynı zamanda başlangıç durumunu "Ready" olarak ayarlar ve bir sinyal gönderir.
-            % Parametre "name", katılımcının adını, "course" ise bağlı olduğu kursu temsil eder.
-            id.Participant = name;
-            id.Course = course;
+            
+            %  register metodunun fiziksel bir ID çubuğunu temsil eden bir nesneyi güncellemesi amaçlanmıştır.
             id.Status = "Ready";
-            signal(id, true);
+            signal(id,true)
+        end
+        
+    end
+    
+end
+*MODULE2.4*:
+% Constructor kullanımı
+
+% Bu kod, etkileşimde kullanılmak üzere bir kurs nesnesi ve bir idstick nesnesi oluşturur.
+w = [42 123 124 163 168 666];
+
+% idstick.m classımızın idstick isimli fonksiyonuna değer ataması yapıyoruz. 
+
+Task 2 
+id = idstick(54321)
+
+% course.m classının içerisindeki course fonksiyonunun elemanlarının değerlerini atıyoruz.
+
+Task 3 
+c = course("Family Fun","White",w);
+
+% Course sınıfı tanımı
+classdef course
+    properties
+        Name
+        Level
+        Waypoints
+    end
+
+    methods
+    
+    % Course.m sınıf tanımı dosyasına, üç girdi alan ve bunları sırasıyla Ad, Seviye ve Yol Noktaları özelliklerine atayan bir yöntem bloğu ve bir yapıcı yöntemi ekleyelim.
+    
+        function c = course(name,lvl,waypts)
+            c.Name = name;
+            c.Level = lvl;
+            c.Waypoints = waypts;
         end
     end
 end
 
-Bu yorum bloğu, idstick sınıfının özelliklerini (properties) ve sınıfın içinde bulunan iki işlevini (methods) anlatır. signal işlevi, kimlik çubuğunun bir sinyal göndermesini kontrol eder ve başarılı veya başarısız duruma göre farklı mesajlar yazdırır. register işlevi ise kimlik çubuğunu kaydedip katılımcı ve kurs bilgilerini günceller, aynı zamanda başlangıç durumunu "Ready" olarak ayarlar ve bir sinyal gönderir.
-
-
-
-% ID Stick class definition
-% Bu sınıf, bir kimlik çubuğunu temsil etmek için kullanılır. Her bir
-% kimlik çubuğu bir seri numarası (SerialNumber), durumu (Status),
-% katılımcı bilgisi (Participant), bağlı olduğu kurs bilgisi (Course) ve
-% zaman damgalarını (Timestamps) içerebilir. Üç işlev içerir:
-% birincisi (idstick) kimlik çubuğu oluşturur ve seri numarasını belirler,
-% ikincisi (signal) kimlik çubuğunun bir sinyal göndermesini sağlar,
-% üçüncüsü (register) ise kimlik çubuğunu kaydedip katılımcı ve kurs
-% bilgilerini günceller, aynı zamanda başlangıç durumunu "Ready" olarak
-% ayarlar ve bir sinyal gönderir.
-
 classdef idstick
     properties
-        SerialNumber    % Kimlik çubuğunun benzersiz seri numarasını temsil eden özellik.
-        Status          % Kimlik çubuğunun durumunu temsil eden özellik.
-        Participant     % Kimlik çubuğuna atanmış olan katılımcının bilgisini temsil eden özellik.
-        Course          % Kimlik çubuğunun bağlı olduğu kursun bilgisini temsil eden özellik.
-        Timestamps      % Kimlik çubuğuna ait zaman damgalarını temsil eden özellik.
+        SerialNumber
+        Status
+        Participant
+        Course
+        Timestamps
     end
-    
+
     methods
+    
+        % Sınıf adı sınıfına yönelik bir yapıcı yöntem genellikle şu forma sahip olacaktır:
+    
         function id = idstick(snum)
-            % Bu işlev, bir kimlik çubuğu oluşturur ve seri numarasını belirler.
-            % Parametre "snum", oluşturulan kimlik çubuğunun seri numarasını temsil eder.
             id.SerialNumber = snum;
         end
         
-        function signal(id, ok)
-            % Bu işlev, kimlik çubuğunun bir sinyal göndermesini sağlar.
-            % Parametre "ok", sinyalin başarılı olup olmadığını belirtir.
-            % "id" parametresi, kimlik çubuğunu temsil eder.
+
+        function signal(id,ok)
             if ok
-                % Eğer sinyal başarılıysa
                 if (id.Status == "Ready") || (id.Status == "Done")
-                    % Eğer kimlik çubuğunun durumu "Ready" veya "Done" ise
-                    disp("Beep beep");
+                    disp("Beep beep")
                 else
-                    % Aksi durumda
-                    disp("Beep");
+                    disp("Beep")
                 end
             else
-                % Eğer sinyal başarısızsa
-                disp("Buzz");
+                disp("Buzz")
             end
         end
 
-        function id = register(id, name, course)
-            % Bu işlev, kimlik çubuğunu kaydedip katılımcı ve kurs bilgilerini günceller.
-            % Aynı zamanda başlangıç durumunu "Ready" olarak ayarlar ve bir sinyal gönderir.
-            % Parametre "name", katılımcının adını, "course" ise bağlı olduğu kursu temsil eder.
+        function id = register(id,name,course)
             id.Participant = name;
             id.Course = course;
             id.Timestamps = NaT(size(course.Waypoints));
             id.Status = "Ready";
-            signal(id, true);
+            signal(id,true)
         end
     end
+
 end
 
-
-Bu yorum bloğu, idstick sınıfının özelliklerini (properties) ve sınıfın içinde bulunan üç işlevini (methods) anlatır. idstick işlevi, bir kimlik çubuğu oluşturur ve seri numarasını belirler. signal işlevi, kimlik çubuğunun bir sinyal göndermesini kontrol eder ve başarılı veya başarısız duruma göre farklı mesajlar yazdırır. register işlevi ise kimlik çubuğunu kaydedip katılımcı ve kurs bilgilerini günceller, aynı zamanda başlangıç durumunu "Ready" olarak ayarlar ve bir sinyal gönderir.
-
-
-
-% Course class definition
-% Bu sınıf, bir eğitim sistemindeki kursları temsil etmek için kullanılır. Her bir
-% kurs bir ad (Name), seviye (Level) ve rotadaki kontrol noktalarını (Waypoints)
-% içerir. Oluşturulan kurs nesnesini başlatmak ve özelliklere değer atamak
-% için bir kurucu işlev (course) ve bu işlemin gerçekleştirildiği bir metot
-% (methods) içerir.
-
+*MODULE2.5*:
+% Course sınıfı tanımı
 classdef course
     properties
-        Name        % Kursun adını temsil eden özellik.
-        Level       % Kursun seviyesini temsil eden özellik.
-        Waypoints   % Kursun rota üzerindeki kontrol noktalarını temsil eden özellik.
+        Name
+        Level
+        Waypoints
     end
 
     methods
-        function c = course(name, lvl, waypts)
-            % Bu kurucu işlev, bir kurs nesnesi oluşturur ve ad, seviye ve
-            % kontrol noktaları özelliklerine değer atar.
-            % Parametre "name", kursun adını,
-            % "lvl", kursun seviyesini,
-            % "waypts", kursun rota üzerindeki kontrol noktalarını temsil eder.
-            c.Name = name;
-            c.Level = lvl;
-            c.Waypoints = waypts;
-        end
-    end
-    
-end
-
-Bu yorum bloğu, course sınıfının özelliklerini (properties) ve sınıfın içinde bulunan kurucu işlevini (constructor method) açıklar. course sınıfı, bir eğitim sistemindeki kursları temsil etmek için kullanılır ve her bir kursun ad, seviye ve kontrol noktaları gibi özellikleri içerir. Kurucu işlev, yeni bir kurs nesnesi oluşturmak ve özelliklere başlangıç değerleri atamak için kullanılır.
-
-
-
-% Course class definition
-% Bu sınıf, bir eğitim sistemindeki kursları temsil etmek için kullanılır. Her bir
-% kurs bir ad (Name), seviye (Level) ve rotadaki kontrol noktalarını (Waypoints)
-% içerir. Kurs nesnesi oluşturmak ve kurs üzerinde çeşitli işlemler gerçekleştirmek
-% için bir kurucu işlev (course) ve bu işlemleri gerçekleştiren metotlar içerir.
-
-classdef course
-    properties
-        Name        % Kursun adını temsil eden özellik.
-        Level       % Kursun seviyesini temsil eden özellik.
-        Waypoints   % Kursun rota üzerindeki kontrol noktalarını temsil eden özellik.
-    end
-
-    methods
-        function c = course(name, lvl, waypts)
-            % Bu kurucu işlev, bir kurs nesnesi oluşturur ve ad, seviye ve
-            % kontrol noktaları özelliklerine değer atar.
-            % Parametre "name", kursun adını,
-            % "lvl", kursun seviyesini,
-            % "waypts", kursun rota üzerindeki kontrol noktalarını temsil eder.
+        function c = course(name,lvl,waypts)
             c.Name = name;
             c.Level = lvl;
             c.Waypoints = waypts;
         end
 
-        function ok = checkWaypoint(c, id, wayptidx)
-            % Bu metot, bir kimlik çubuğunun belirli bir kontrol noktasını kontrol eder.
-            % Parametre "id", kontrol edilen kimlik çubuğunu temsil eder.
-            % Parametre "wayptidx", kontrol edilen kontrol noktasının indeksini temsil eder.
-            % Metot, kontrol noktasının geçerli olup olmadığını belirler ve
-            % geçerli ise "true", değilse "false" döndürür.
-            [~, prevwpidx] = max(id.Timestamps);
-            % Geçerli kontrol noktası bir sonraki olmalıdır
-            ok = (wayptidx == (1 + prevwpidx));
+        function ok = checkWaypoint(c,id,wayptidx)
+            % Get the index of the previous waypoint found
+            [~,prevwpidx] = max(id.Timestamps);
+            % Current waypoint should be the next one
+            ok = (wayptidx == (1+prevwpidx));
         end
 
-        function disp(c)
-            % Bu metot, kurs bilgilerini ekrana yazdırır.
-            str = c.Level + " seviyeli '" + c.Name + "' kursu, " + ...
-                numel(c.Waypoints) + " kontrol noktasına sahiptir.";
+        % Özel bir disp yöntemi oluşturmanın standart bir yolu, göstermek istediğiniz biçimlendirilmiş bilgilerin bir dizesini oluşturmak ve ardından bu dizede disp işlevini çağırmaktır.
+        
+        function disp(c) 
+            str = c.Level + " course '" + c.Name + "' with " + ...
+                numel(c.Waypoints) + " waypoints";
             disp(str)
         end
     end
 
 end
-
-Bu yorum bloğu, course sınıfının özelliklerini (properties) ve sınıfın içinde bulunan kurucu işlevi (constructor method) ve metotları (methods) açıklar. course sınıfı, bir eğitim sistemindeki kursları temsil etmek için kullanılır. Kurucu işlev, yeni bir kurs nesnesi oluşturmak ve özelliklere başlangıç değerleri atamak için kullanılır. checkWaypoint metodu, bir kimlik çubuğunun belirli bir kontrol noktasını kontrol eder ve geçerliliğini değerlendirir. disp metodu ise kurs bilgilerini ekrana yazdırmak için kullanılır.
-
-
-
-% Course class definition
-% Bu sınıf, bir eğitim sistemindeki kursları temsil etmek için kullanılır. Her bir
-% kurs bir ad (Name), seviye (Level) ve rotadaki kontrol noktalarını (Waypoints)
-% içerir. Kurs nesnesi oluşturmak ve kurs üzerinde çeşitli işlemler gerçekleştirmek
-% için bir kurucu işlev (course) ve bu işlemleri gerçekleştiren metotlar içerir.
-
-classdef course
+% ID Stick sınıf tanımı
+classdef idstick
     properties
-        Name (1,1) string    % Kursun adını temsil eden özellik.
-        Level (1,1) string   % Kursun seviyesini temsil eden özellik.
-        Waypoints (:,1) double % Kursun rota üzerindeki kontrol noktalarını temsil eden özellik.
+        SerialNumber
+        Status
+        Participant
+        Course
+        Timestamps
     end
 
     methods
-        function c = course(name, lvl, waypts)
-            % Bu kurucu işlev, bir kurs nesnesi oluşturur ve ad, seviye ve
-            % kontrol noktaları özelliklerine değer atar.
-            % Parametre "name", kursun adını,
-            % "lvl", kursun seviyesini,
-            % "waypts", kursun rota üzerindeki kontrol noktalarını temsil eder.
-            c.Name = name;
-            c.Level = lvl;
-            c.Waypoints = waypts;
+        function id = idstick(snum)
+            id.SerialNumber = snum;
+        end
+        
+        function signal(id,ok)
+            if ok
+                if (id.Status == "Ready") || (id.Status == "Done")
+                    disp("Beep beep")
+                else
+                    disp("Beep")
+                end
+            else
+                disp("Buzz")
+            end
         end
 
-        function ok = checkWaypoint(c, id, wayptidx)
-            % Bu metot, bir kimlik çubuğunun belirli bir kontrol noktasını kontrol eder.
-            % Parametre "id", kontrol edilen kimlik çubuğunu temsil eder.
-            % Parametre "wayptidx", kontrol edilen kontrol noktasının indeksini temsil eder.
-            % Metot, kontrol noktasının geçerli olup olmadığını belirler ve
-            % geçerli ise "true", değilse "false" döndürür.
-            [~, prevwpidx] = max(id.Timestamps);
-            % Geçerli kontrol noktası bir sonraki olmalıdır
-            ok = (wayptidx == (1 + prevwpidx));
+        function id = register(id,name,course)
+            id.Participant = name;
+            id.Course = course;
+            id.Timestamps = NaT(size(course.Waypoints));
+            id.Status = "Ready";
+            signal(id,true)
         end
 
-        function disp(c)
-            % Bu metot, kurs bilgilerini ekrana yazdırır.
-            str = c.Level + " seviyeli '" + c.Name + "' kursu, " + ...
-                numel(c.Waypoints) + " kontrol noktasına sahiptir:";
-            disp(str)
-            disp(c.Waypoints)
+        function id = checkWaypoint(id,wayptnum)
+            % Course objesini çağırır
+            c = id.Course;
+            % ID Stick öğesini kontrol eder ve günceller
+            % Waypoint bu course nesnesinde varmı diye kontrol eder
+            [id,ok,n] = updateStatus(id,wayptnum);
+            % Waypoint öğesi bulunursa, ID stick durumunu var olarak değiştirir , ve the
+            % waypoint eğer başlamazsa , course methodunu kotnrol için çağırıp
+            % wayppoint kuralların göre başlar. (Waypoint eğer başlarsa
+            % , kontrol edecek daha fazla birşey yoktur.)
+            if ok && (n > 1)
+                ok = checkWaypoint(c,id,n);
+            end
+            % Waypointin ara noktasını günceller.
+            id.Timestamps(n) = datetime("now");
+            % Kullanıcıya ne işlemi aktarır
+            signal(id,ok)
+        end
+
+        function [id,ok,idx] = updateStatus(id,wayptnum)
+            % Bu nesnedeki waypoint öğesini bulur
+            wplist = id.Course.Waypoints;
+            idx = find(wayptnum == wplist,1,"first");
+            % Şuanki Id'sinin ne olduğunu bulur.
+            if (id.Status == "Error") || (id.Status == "Done")
+                % Durumu aynı bırakır eğer koşullar geçerli ise
+                ok = false;
+            elseif (id.Status == "Ready")
+                % Waypoint başlamaya hazır.
+                if (idx == 1)
+                    % Waypoint başladı
+                    id.Status = "Running";
+                    ok = true;
+                else
+                    % waypoint başlamadan önce kontrol eder.
+                    ok = false;
+                end
+            else
+                %  Çalışma esnasında waypointin bu nesnede olup olmadıgına bakar
+                ok = ~isempty(idx);
+                % Waypoint bittiyse iş bitti demektir.
+                if (idx == numel(wplist))
+                    id.Status = "Done";
+                end
+            end
         end
     end
 
 end
 
-Bu yorum bloğu, course sınıfının özelliklerini (properties) ve sınıfın içinde bulunan kurucu işlevi (constructor method) ve metotları (methods) açıklar. course sınıfı, bir eğitim sistemindeki kursları temsil etmek için kullanılır. Kurucu işlev, yeni bir kurs nesnesi oluşturmak ve özelliklere başlangıç değerleri atamak için kullanılır. checkWaypoint metodu, bir kimlik çubuğunun belirli bir kontrol noktasını kontrol eder ve geçerliliğini değerlendirir. disp metodu ise kurs bilgilerini ekrana yazdırmak için kullanılır. Bu sınıf, Name, Level, ve Waypoints özelliklerini içerir ve bu özelliklerin her biri sadece bir değer alabilir.
+% 2 Objenin Simülasyonu
 
+w1 = [42 123 124 163 168 666];
+c1 = course("Family Fun","White",w1)
 
+w2 = [42 112:123 666];
+c2 = course("Insanity","Red",w2)
 
-% Course class definition
-% Bu sınıf, bir eğitim sistemindeki kursları temsil etmek için kullanılır. Her bir
-% kurs bir ad (Name), seviye (Level) ve rotadaki kontrol noktalarını (Waypoints)
-% içerir. Kurs nesnesi oluşturmak ve kurs üzerinde çeşitli işlemler gerçekleştirmek
-% için bir kurucu işlev (course) ve bu işlemleri gerçekleştiren metotlar içerir.
+Create two ID sticks
+id1 = idstick(123456);
+id2 = idstick(987654);
 
+Register a participant
+id1 = register(id1,"Astrid",c1);
+
+Simulate running the course
+id1 = checkWaypoint(id1,42);
+id1 = checkWaypoint(id1,123);
+id1 = checkWaypoint(id1,124);
+% Eğer waypoint kayıpsa işlem tamamlanamaz.
+id1 = checkWaypoint(id1,168);
+% işlem devam eder.
+id1 = checkWaypoint(id1,666)
+
+*MODULE3.2*:
+% Course class tanımlaması
 classdef course
     properties
-        Name (1,1) string           % Kursun adını temsil eden özellik.
-        Level (1,1) string          % Kursun seviyesini temsil eden özellik.
-        Waypoints (:,1) double {mustBePositive, mustBeInteger} % Kursun rota üzerindeki kontrol noktalarını temsil eden özellik.
+
+        % Bir özelliğin nasıl saklanması gerektiğini belirtmek için, özellik adından sonra veri türünün adını ekleyebilirsiniz.
+        % Verilerin beklenen boyutunu belirtmek için özellik adından sonra (ve herhangi bir tür belirtiminden önce) boyutlar ekleyebilirsiniz. Herhangi bir boyutta (belirli bir boyutta) bir dizi belirtmek için : kullanılır.
+        
+        Name (1,1) string 
+        Level (1,1) string {mustBeMember(Level,["White","Yellow","Green","Orange","Red"])} = "White"    % Şu anda zorluk seviyesi herhangi bir skaler dizi olabilir. Bir özellik değerinin onaylanmış bir listeden olduğundan emin olmak için mustBeMember doğrulama işlevini kullanabilirsiniz.
+        Waypoints (:,1) double  {mustBePositive, mustBeInteger} % Yol noktaları sayısal bir vektör olarak saklanır. Ancak ara nokta numaraları yalnızca pozitif tam sayılar olduklarında anlamlıdır.  
     end
 
     methods
-        function c = course(name, lvl, waypts)
-            % Bu kurucu işlev, bir kurs nesnesi oluşturur ve ad, seviye ve
-            % kontrol noktaları özelliklerine değer atar.
-            % Parametre "name", kursun adını,
-            % "lvl", kursun seviyesini,
-            % "waypts", kursun rota üzerindeki kontrol noktalarını temsil eder.
+        function c = course(name,lvl,waypts)
             c.Name = name;
             c.Level = lvl;
             c.Waypoints = waypts;
         end
 
-        function ok = checkWaypoint(c, id, wayptidx)
-            % Bu metot, bir kimlik çubuğunun belirli bir kontrol noktasını kontrol eder.
-            % Parametre "id", kontrol edilen kimlik çubuğunu temsil eder.
-            % Parametre "wayptidx", kontrol edilen kontrol noktasının indeksini temsil eder.
-            % Metot, kontrol noktasının geçerli olup olmadığını belirler ve
-            % geçerli ise "true", değilse "false" döndürür.
-            [~, prevwpidx] = max(id.Timestamps);
-            % Geçerli kontrol noktası bir sonraki olmalıdır
-            ok = (wayptidx == (1 + prevwpidx));
+        function ok = checkWaypoint(c,id,wayptidx)
+            % Get the index of the previous waypoint found
+            [~,prevwpidx] = max(id.Timestamps);
+            % Current waypoint should be the next one
+            ok = (wayptidx == (1+prevwpidx));
         end
 
         function disp(c)
-            % Bu metot, kurs bilgilerini ekrana yazdırır.
-            str = c.Level + " seviyeli '" + c.Name + "' kursu, " + ...
-                numel(c.Waypoints) + " kontrol noktasına sahiptir:";
+            str = c.Level + " course '" + c.Name + "' with " + ...
+                numel(c.Waypoints) + " waypoints:";
             disp(str)
             disp(c.Waypoints)
         end
@@ -627,107 +572,62 @@ classdef course
 
 end
 
+% Özellik Türlerini Ayarlama
 
-Bu yorum bloğu, course sınıfının özelliklerini (properties) ve sınıfın içinde bulunan kurucu işlevi (constructor method) ve metotları (methods) açıklar. course sınıfı, bir eğitim sistemindeki kursları temsil etmek için kullanılır. Özellikler, sınırlamalar ekleyerek belirli tür ve değer kısıtlamalarına tabi tutulmuştur. Name ve Level özellikleri her biri sadece bir değer alabilirken, Waypoints özelliği birden fazla değeri içeren bir sayı dizisidir ve bu değerler pozitif tamsayılar olmalıdır. Kurucu işlev, yeni bir kurs nesnesi oluşturmak ve özelliklere başlangıç değerleri atamak için kullanılır. checkWaypoint metodu, bir kimlik çubuğunun belirli bir kontrol noktasını kontrol eder ve geçerliliğini değerlendirir. disp metodu ise kurs bilgilerini ekrana yazdırmak için kullanılır.
+% Geçerli girişlerle test edin
 
+w = [42 123 124 163 168 666];
+c = course("Family Fun",'Yellow',w)
 
-% Course class definition
-% Bu sınıf, bir eğitim sistemindeki kursları temsil etmek için kullanılır. Her bir
-% kurs bir ad (Name), seviye (Level) ve rotadaki kontrol noktalarını (Waypoints)
-% içerir. Kurs nesnesi oluşturmak ve kurs üzerinde çeşitli işlemler gerçekleştirmek
-% için bir kurucu işlev (course) ve bu işlemleri gerçekleştiren metotlar içerir.
+nameout = c.Name
+levelout = c.Level
+wout = c.Waypoints
 
+whos w nameout levelout wout
+
+% Geçersiz(?) girişlerle test edin
+w = [-12;0;123;NaN];
+c2 = course(42,'Banana',w)
+
+nameout = c2.Name
+levelout = c2.Level
+wout = c2.Waypoints
+
+whos w nameout levelout wout
+
+*MODULE3.3*:
+% Course sınıfı tanımlaması
 classdef course
     properties
-        Name (1,1) string   % Kursun adını temsil eden özellik.
-        Level (1,1) string {mustBeMember(Level,["White","Yellow","Green","Orange","Red"])} = "White" % Kursun seviyesini temsil eden özellik.
-        Waypoints (:,1) double {mustBePositive, mustBeInteger} % Kursun rota üzerindeki kontrol noktalarını temsil eden özellik.
+        Name (1,1) string
+        Level (1,1) string {mustBeMember(Level,["White","Yellow","Green","Orange","Red"])} = "White"
+        Waypoints (:,1) double {mustBePositive, mustBeInteger}
     end
 
     methods
-        function c = course(name, lvl, waypts)
-            % Bu kurucu işlev, bir kurs nesnesi oluşturur ve ad, seviye ve
-            % kontrol noktaları özelliklerine değer atar.
-            % Parametre "name", kursun adını,
-            % "lvl", kursun seviyesini,
-            % "waypts", kursun rota üzerindeki kontrol noktalarını temsil eder.
-            c.Name = name;
-            c.Level = lvl;
-            c.Waypoints = waypts;
-        end
+        function c = course(name,lvl,waypts)
 
-        function ok = checkWaypoint(c, id, wayptidx)
-            % Bu metot, bir kimlik çubuğunun belirli bir kontrol noktasını kontrol eder.
-            % Parametre "id", kontrol edilen kimlik çubuğunu temsil eder.
-            % Parametre "wayptidx", kontrol edilen kontrol noktasının indeksini temsil eder.
-            % Metot, kontrol noktasının geçerli olup olmadığını belirler ve
-            % geçerli ise "true", değilse "false" döndürür.
-            [~, prevwpidx] = max(id.Timestamps);
-            % Geçerli kontrol noktası bir sonraki olmalıdır
-            ok = (wayptidx == (1 + prevwpidx));
-        end
-
-        function disp(c)
-            % Bu metot, kurs bilgilerini ekrana yazdırır.
-            str = c.Level + " seviyeli '" + c.Name + "' kursu, " + ...
-                numel(c.Waypoints) + " kontrol noktasına sahiptir:";
-            disp(str)
-            disp(c.Waypoints)
-        end
-    end
-
-end
-
-Bu yorum bloğu, course sınıfının özelliklerini (properties) ve sınıfın içinde bulunan kurucu işlevi (constructor method) ve metotları (methods) açıklar. course sınıfı, bir eğitim sistemindeki kursları temsil etmek için kullanılır. Özellikler, sınırlamalar ekleyerek belirli tür ve değer kısıtlamalarına tabi tutulmuştur. Name ve Waypoints özellikleri her biri sadece bir değer alabilirken, Level özelliği belirli bir küme içinden değer almalıdır. Kurucu işlev, yeni bir kurs nesnesi oluşturmak ve özelliklere başlangıç değerleri atamak için kullanılır. checkWaypoint metodu, bir kimlik çubuğunun belirli bir kontrol noktasını kontrol eder ve geçerliliğini değerlendirir. disp metodu ise kurs bilgilerini ekrana yazdırmak için kullanılır.
-
-
-
-
-% Course class definition
-% Bu sınıf, bir eğitim sistemindeki kursları temsil etmek için kullanılır. Her bir
-% kurs bir ad (Name), seviye (Level) ve rotadaki kontrol noktalarını (Waypoints)
-% içerir. Kurs nesnesi oluşturmak ve kurs üzerinde çeşitli işlemler gerçekleştirmek
-% için bir kurucu işlev (course) ve bu işlemleri gerçekleştiren metotlar içerir.
-
-classdef course
-    properties
-        Name (1,1) string           % Kursun adını temsil eden özellik.
-        Level (1,1) string {mustBeMember(Level,["White","Yellow","Green","Orange","Red"])} = "White" % Kursun seviyesini temsil eden özellik.
-        Waypoints (:,1) double {mustBePositive, mustBeInteger} % Kursun rota üzerindeki kontrol noktalarını temsil eden özellik.
-    end
-
-    methods
-        function c = course(name, lvl, waypts)
-            % Bu kurucu işlev, bir kurs nesnesi oluşturur ve ad, seviye ve
-            % kontrol noktaları özelliklerine değer atar.
-            % Parametre "name", kursun adını,
-            % "lvl", kursun seviyesini,
-            % "waypts", kursun rota üzerindeki kontrol noktalarını temsil eder.
+            % Giriş doğrulaması gerçekleştirmek için işlevinizin başına bir argüman bloğu ekleyin. 
             arguments
-                name {mustBeText} % Ad özelliğinin metin türünde olması gerektiğini belirtir.
-                lvl               % Seviye özelliği için belirli bir tür kontrolü yapılmasını sağlar.
-                waypts {mustBeNumeric} % Waypoints özelliği için sayısal tür kontrolü yapılmasını sağlar.
+                name {mustBeText}
+                lvl
+                waypts {mustBeNumeric}
             end
             c.Name = name;
             c.Level = lvl;
             c.Waypoints = waypts;
         end
 
-        function ok = checkWaypoint(c, id, wayptidx)
-            % Bu metot, bir kimlik çubuğunun belirli bir kontrol noktasını kontrol eder.
-            % Parametre "id", kontrol edilen kimlik çubuğunu temsil eder.
-            % Parametre "wayptidx", kontrol edilen kontrol noktasının indeksini temsil eder.
-            % Metot, kontrol noktasının geçerli olup olmadığını belirler ve
-            % geçerli ise "true", değilse "false" döndürür.
-            [~, prevwpidx] = max(id.Timestamps);
-            % Geçerli kontrol noktası bir sonraki olmalıdır
-            ok = (wayptidx == (1 + prevwpidx));
+        function ok = checkWaypoint(c,id,wayptidx)
+            % Get the index of the previous waypoint found
+            [~,prevwpidx] = max(id.Timestamps);
+            % Current waypoint should be the next one
+            ok = (wayptidx == (1+prevwpidx));
         end
 
         function disp(c)
-            % Bu metot, kurs bilgilerini ekrana yazdırır.
-            str = c.Level + " seviyeli '" + c.Name + "' kursu, " + ...
-                numel(c.Waypoints) + " kontrol noktasına sahiptir:";
+            str = c.Level + " course '" + c.Name + "' with " + ...
+                numel(c.Waypoints) + " waypoints:";
             disp(str)
             disp(c.Waypoints')
         end
@@ -735,382 +635,104 @@ classdef course
 
 end
 
+% Geçersiz Girişleri Kısıtlama
 
-Bu yorum bloğu, course sınıfının özelliklerini (properties) ve sınıfın içinde bulunan kurucu işlevi (constructor method) ve metotları (methods) açıklar. course sınıfı, bir eğitim sistemindeki kursları temsil etmek için kullanılır. Özellikler, sınırlamalar ekleyerek belirli tür ve değer kısıtlamalarına tabi tutulmuştur. Name özelliği metin türünde olmalıdır (mustBeText). Level özelliği belirli bir küme içinden değer almalıdır (mustBeMember). Waypoints özelliği sayısal türde ve pozitif, tam sayı olmalıdır (mustBeNumeric, mustBePositive, mustBeInteger). Kurucu işlev, yeni bir kurs nesnesi oluşturmak ve özelliklere başlangıç değerleri atamak için kullanılır. checkWaypoint metodu, bir kimlik çubuğunun belirli bir kontrol noktasını kontrol eder ve geçerliliğini değerlendirir. disp metodu ise kurs bilgilerini ekrana yazdırmak için kullanılır.
+% Geçerli girişlerle test edin (çalışması gerekir)
 
+w = [42 123 124 163 168 666];
+c1 = course("Family Fun",'Yellow',w)
 
+c2 = course('Crazy time',"Red",10:20)
 
-% ID Stick class definition
-% Bu sınıf, bir kimlik çubuğunu ve bu kimlik çubuğunun bir kurs üzerindeki
-% ilerlemesini temsil etmek için kullanılır. Kimlik çubuğu, bir seri numarası
-% (SerialNumber), durumu (Status), sahibi (Participant), bağlı olduğu kurs
-% (Course), ve kontrol noktalarındaki geçiş zamanlarını (Timestamps) içerir.
-% Kimlik çubuğu üzerinde çeşitli işlemler gerçekleştiren metotlar içerir.
-% Bu işlemler arasında kimlik çubuğunu kaydetme, kontrol noktalarını kontrol etme,
-% durumunu güncelleme ve sinyal üretme bulunmaktadır.
+% Geçersiz girişlerle test edin (başarısız olmalıdır)
 
-classdef idstick
-    properties
-        SerialNumber (1,1) uint32    % Kimlik çubuğunun seri numarasını temsil eden özellik.
-        Status (1,1) string          % Kimlik çubuğunun durumunu temsil eden özellik.
-        Participant (1,1) string     % Kimlik çubuğunun sahibini temsil eden özellik.
-        Course                        % Kimlik çubuğunun bağlı olduğu kursu temsil eden özellik.
-        Timestamps (:,1) datetime    % Kimlik çubuğunun kontrol noktalarındaki geçiş zamanlarını temsil eden özellik.
-    end
+% Numeric name
+c3 = course(42,"White",w)
 
-    methods
-        function id = idstick(snum)
-            % Bu kurucu işlev, bir kimlik çubuğu nesnesi oluşturur.
-            % Parametre "snum", kimlik çubuğunun seri numarasını temsil eder.
-            arguments
-                snum {mustBeNumeric, mustBePositive, mustBeInteger} % Seri numarasının sayısal, pozitif ve tam sayı olması gerektiğini belirtir.
-            end
-            id.SerialNumber = snum;
-        end
+% String waypoint values
+c4 = course('Name OK',"Orange",["42" "123" "666"])
 
-        function disp(id)
-            % Bu metot, kimlik çubuğu bilgilerini ekrana yazdırır.
-            % Seri numarası, durum, sahibi ve bağlı olduğu kurs bilgilerini içerir.
-            str = "ID stick #" + id.SerialNumber;
-            if isempty(id.Participant)
-                str = str + " which is not yet registered";
-                disp(str)
-            else
-                str = str + " is registered to " + id.Participant + " who is ";
-                switch id.Status
-                    case "Ready"
-                        str = str + "ready to run";
-                    case "Running"
-                        str = str + "running";
-                    case "Done"
-                        str = str + "finished with";
-                end
-                disp(str)
-                disp(id.Course)
-            end
-        end
-        
-        function signal(id,ok)
-            % Bu metot, bir sinyal üretir ve ekrana yazdırır.
-            % Parametre "ok", sinyalin başarılı (true) ya da başarısız (false) olduğunu belirtir.
-            if ok
-                if (id.Status == "Ready") || (id.Status == "Done")
-                    disp("Beep beep")
-                else
-                    disp("Beep")
-                end
-            else
-                disp("Buzz")
-            end
-        end
+MODLUE 3.4
+% Course Constructor
+% Üçlü İnput
 
-        function id = register(id,name,course)
-            % Bu metot, kimlik çubuğunu kaydeder.
-            % Parametre "name", kimlik çubuğunun sahibini temsil eder.
-            % Parametre "course", kimlik çubuğunun bağlı olduğu kursu temsil eder.
-            id.Participant = name;
-            id.Course = course;
-            id.Timestamps = NaT(size(course.Waypoints));
-            id.Status = "Ready";
-            signal(id,true)
-        end
+w1 = [42 123 124 163 168 666];
+c1 = course("Family Fun","White",w1)
 
-        function id = checkWaypoint(id,wayptnum)
-            % Bu metot, kimlik çubuğunun belirli bir kontrol noktasını kontrol eder.
-            % Parametre "wayptnum", kontrol edilen kontrol noktasının numarasını temsil eder.
-            c = id.Course; % Kurs objesini al
-            [id,ok,n] = updateStatus(id,wayptnum); % Durumu kontrol et ve güncelle
-            if ok && (n > 1)
-                ok = checkWaypoint(c,id,n); % Kurstaki kurallara göre kontrol noktasını kontrol et
-            end
-            id.Timestamps(n) = datetime("now"); % Kontrol noktasının zaman damgasını güncelle
-            signal(id,ok) % Katılımcıya ne olduğunu bildir
-        end
+w2 = [42 112:123 666];
+c2 = course("Insanity","Red",w2)
 
-        function [id,ok,idx] = updateStatus(id,wayptnum)
-            % Bu metot, kimlik çubuğunun durumunu günceller ve kontrol noktasını kontrol eder.
-            % Parametre "wayptnum", kontrol edilen kontrol noktasının numarasını temsil eder.
-            wplist = id.Course.Waypoints;
-            idx = find(wayptnum == wplist,1,"first");
-            if (id.Status == "Error") || (id.Status == "Done")
-                ok = false;
-            elseif (id.Status == "Ready")
-                if (idx == 1)
-                    id.Status = "Running";
-                    ok = true;
-                else
-                    ok = false;
-                end
-            else
-                ok = ~isempty(idx);
-                if (idx == numel(wplist))
-                    id.Status = "Done";
-                end
-            end
-        end
-    end
+Create two ID sticks
+id1 = idstick(123456);
+id2 = idstick(987654);
 
-end
+Register a participant
+id1 = register(id1,"Astrid",c1);
 
-Bu yorum bloğu, idstick sınıfının özelliklerini (properties) ve sınıfın içinde bulunan kurucu işlevi (constructor method) ve metotları (methods) açıklar. idstick sınıfı, bir kimlik çubuğunu ve bu kimlik çubuğunun bir kurs üzerindeki ilerlemesini temsil etmek için kullanılır. Kimlik çubuğu, bir seri numarası (SerialNumber), durumu (Status), sahibi (Participant), bağlı olduğu kurs (Course), ve kontrol noktalarındaki geçiş zamanlarını (Timestamps) içerir. Sınıf, kimlik çubuğu üzerinde çeşitli işlemler gerçekleştiren metotlar içerir. Bu işlemler arasında kimlik çubuğunu kaydetme, kontrol noktalarını kontrol etme, durumunu güncelleme ve sinyal üretme bulunmaktadır.
+Simulate running the course
+id1 = checkWaypoint(id1,42);
+id1 = checkWaypoint(id1,123);
+id1 = checkWaypoint(id1,124);
+% Eğer waypoint kayıpsa işlem tamamlanamaz.
+id1 = checkWaypoint(id1,168);
+% işlem devam eder.
+id1 = checkWaypoint(id1,666)
 
+% Fixing the course constructor
 
-
-
-% ID Stick class definition
-% Bu sınıf, bir kimlik çubuğunu ve bu kimlik çubuğunun bir kurs üzerindeki
-% ilerlemesini temsil etmek için kullanılır. Kimlik çubuğu, bir seri numarası
-% (SerialNumber), durumu (Status), sahibi (Participant), bağlı olduğu kurs
-% (Course), ve kontrol noktalarındaki geçiş zamanlarını (Timestamps) içerir.
-% Sınıf, kimlik çubuğu üzerinde çeşitli işlemler gerçekleştiren metotlar içerir.
-% Bu işlemler arasında kimlik çubuğunu kaydetme, kontrol noktalarını kontrol etme,
-% durumunu güncelleme ve sinyal üretme bulunmaktadır.
-
-classdef idstick
-    properties
-        SerialNumber (1,1) uint32    % Kimlik çubuğunun seri numarasını temsil eden özellik.
-        Status (1,1) string          % Kimlik çubuğunun durumunu temsil eden özellik.
-        Participant (1,1) string     % Kimlik çubuğunun sahibini temsil eden özellik.
-        Course course                % Kimlik çubuğunun bağlı olduğu kursu temsil eden özellik.
-        Timestamps (:,1) datetime    % Kimlik çubuğunun kontrol noktalarındaki geçiş zamanlarını temsil eden özellik.
-    end
-
-    methods
-        function id = idstick(snum)
-            % Bu kurucu işlev, bir kimlik çubuğu nesnesi oluşturur.
-            % Parametre "snum", kimlik çubuğunun seri numarasını temsil eder.
-            arguments
-                snum {mustBeNumeric, mustBePositive, mustBeInteger} % Seri numarasının sayısal, pozitif ve tam sayı olması gerektiğini belirtir.
-            end
-            id.SerialNumber = snum;
-        end
-
-        function disp(id)
-            % Bu metot, kimlik çubuğu bilgilerini ekrana yazdırır.
-            % Seri numarası, durum, sahibi ve bağlı olduğu kurs bilgilerini içerir.
-            str = "ID stick #" + id.SerialNumber;
-            if (id.Participant == "")
-                str = str + " which is not yet registered";
-                disp(str)
-            else
-                str = str + " is registered to " + id.Participant + " who is ";
-                switch id.Status
-                    case "Ready"
-                        str = str + "ready to run";
-                    case "Running"
-                        str = str + "running";
-                    case "Done"
-                        str = str + "finished with";
-                end
-                disp(str)
-                disp(id.Course)
-            end
-        end
-        
-        function signal(id,ok)
-            % Bu metot, bir sinyal üretir ve ekrana yazdırır.
-            % Parametre "ok", sinyalin başarılı (true) ya da başarısız (false) olduğunu belirtir.
-            if ok
-                if (id.Status == "Ready") || (id.Status == "Done")
-                    disp("Beep beep")
-                else
-                    disp("Beep")
-                end
-            else
-                disp("Buzz")
-            end
-        end
-
-        function id = register(id,name,course)
-            % Bu metot, kimlik çubuğunu kaydeder.
-            % Parametre "name", kimlik çubuğunun sahibini temsil eder.
-            % Parametre "course", kimlik çubuğunun bağlı olduğu kursu temsil eder.
-            id.Participant = name;
-            id.Course = course;
-            id.Timestamps = NaT(size(course.Waypoints));
-            id.Status = "Ready";
-            signal(id,true)
-        end
-
-        function id = checkWaypoint(id,wayptnum)
-            % Bu metot, kimlik çubuğunun belirli bir kontrol noktasını kontrol eder.
-            % Parametre "wayptnum", kontrol edilen kontrol noktasının numarasını temsil eder.
-            c = id.Course; % Kurs objesini al
-            [id,ok,n] = updateStatus(id,wayptnum); % Durumu kontrol et ve güncelle
-            if ok && (n > 1)
-                ok = checkWaypoint(c,id,n); % Kurstaki kurallara göre kontrol noktasını kontrol et
-            end
-            id.Timestamps(n) = datetime("now"); % Kontrol noktasının zaman damgasını güncelle
-            signal(id,ok) % Katılımcıya ne olduğunu bildir
-        end
-
-        function [id,ok,idx] = updateStatus(id,wayptnum)
-            % Bu metot, kimlik çubuğunun durumunu günceller ve kontrol noktasını kontrol eder.
-            % Parametre "wayptnum", kontrol edilen kontrol noktasının numarasını temsil eder.
-            wplist = id.Course.Waypoints;
-            idx = find(wayptnum == wplist,1,"first");
-            if (id.Status == "Error") || (id.Status == "Done")
-                ok = false;
-            elseif (id.Status == "Ready")
-                if (idx == 1)
-                    id.Status = "Running";
-                    ok = true;
-                else
-                    ok = false;
-                end
-            else
-                ok = ~isempty(idx);
-                if (idx == numel(wplist))
-                    id.Status = "Done";
-                end
-            end
-        end
-    end
-
-end
-
-
-
-% Course class definition
-% Bu sınıf, bir kursu temsil eder ve kursun adını (Name), seviyesini (Level),
-% ve kontrol noktalarını (Waypoints) içerir. Kursun seviyesi belirli bir
-% önek kümesine (White, Yellow, Green, Orange, Red) ait olmalıdır. Ayrıca,
-% kontrol noktaları pozitif ve tam sayı olmalıdır.
-% Sınıfın kurucu işlevi, kursun adını, seviyesini ve kontrol noktalarını alarak
-% bir kurs nesnesi oluşturur. Kontrol noktaları, kursa ait geçilecek
-% kontrol noktalarının sıralı bir listesini temsil eder.
-% Metotlar arasında, belirli bir kontrol noktasının kontrolünü sağlayan
-% checkWaypoint metodu bulunur.
-% Bu sınıf, bir yorum satırı olarak işlev ve özelliklerini açıklar.
-
+% Course sınıfı tanımlama
 classdef course
     properties
-        Name (1,1) string                                            % Kursun adını temsil eden özellik.
-        Level (1,1) string {mustBeMember(Level,["White","Yellow","Green","Orange","Red"])} = "White"  % Kursun seviyesini temsil eden özellik.
-        Waypoints (:,1) double {mustBePositive, mustBeInteger}       % Kursun kontrol noktalarını temsil eden özellik.
+        Name (1,1) string
+        Level (1,1) string {mustBeMember(Level,["White","Yellow","Green","Orange","Red"])} = "White"
+        Waypoints (:,1) double {mustBePositive, mustBeInteger}
     end
 
     methods
-        function c = course(name, lvl, waypts)
-            % Bu kurucu işlev, bir kurs nesnesi oluşturur.
-            % Parametreler:
-            %   - name: Kursun adı
-            %   - lvl: Kursun seviyesi (White, Yellow, Green, Orange, Red)
-            %   - waypts: Kursun kontrol noktaları
-            if (nargin == 3)
+        function c = course(name,lvl,waypts)
+            if (nargin == 3) % Nargin işlevi, işlev çağrıldığında verilen giriş sayısını döndürür.
                 c.Name = name;
                 c.Level = lvl;
                 c.Waypoints = waypts;
-            end
-        end
-
-        function ok = checkWaypoint(c, id, wayptidx)
-            % Bu metot, belirli bir kontrol noktasının kontrolünü sağlar.
-            % Parametreler:
-            %   - id: Kursa ait bir kimlik çubuğu nesnesi
-            %   - wayptidx: Kontrol noktasının indeksi
-            % Kimlik çubuğunun geçiş zaman damgalarından önceki kontrol noktasının
-            % indeksini alır ve belirli bir kontrol noktasının geçerli olup olmadığını kontrol eder.
-            [~, prevwpidx] = max(id.Timestamps);
-            ok = (wayptidx == (1 + prevwpidx));
-        end
-    end
-end
-
-
-Bu yorum bloğu, course sınıfının özelliklerini (properties) ve sınıfın içinde bulunan kurucu işlevi (constructor method) ve metotları (methods) açıklar. course sınıfı, bir kursu temsil eder ve kursun adını (Name), seviyesini (Level), ve kontrol noktalarını (Waypoints) içerir. Kursun seviyesi belirli bir önek kümesine (White, Yellow, Green, Orange, Red) ait olmalıdır. Ayrıca, kontrol noktaları pozitif ve tam sayı olmalıdır. Sınıfın kurucu işlevi, kursun adını, seviyesini ve kontrol noktalarını alarak bir kurs nesnesi oluşturur. Metotlar arasında, belirli bir kontrol noktasının kontrolünü sağlayan checkWaypoint metodu bulunur.
-
-
-
-% Course class definition
-% Bu sınıf, bir kursu temsil eder ve kursun adını (Name), seviyesini (Level),
-% ve kontrol noktalarını (Waypoints) içerir. Kursun seviyesi belirli bir
-% önek kümesine (White, Yellow, Green, Orange, Red) ait olmalıdır. Ayrıca,
-% kontrol noktaları pozitif ve tam sayı olmalıdır.
-% Sınıfın kurucu işlevi, kursun adını, seviyesini ve kontrol noktalarını alarak
-% bir kurs nesnesi oluşturur. Kontrol noktaları, kursa ait geçilecek
-% kontrol noktalarının sıralı bir listesini temsil eder.
-% Kurucu işlev, eksik girişlerle çağrıldığında bir hata mesajı döndürür.
-% Metotlar arasında, belirli bir kontrol noktasının kontrolünü sağlayan
-% checkWaypoint metodu bulunur.
-% Bu sınıf, bir yorum satırı olarak işlev ve özelliklerini açıklar.
-
-classdef course
-    properties
-        Name (1,1) string                                            % Kursun adını temsil eden özellik.
-        Level (1,1) string {mustBeMember(Level,["White","Yellow","Green","Orange","Red"])} = "White"  % Kursun seviyesini temsil eden özellik.
-        Waypoints (:,1) double {mustBePositive, mustBeInteger}       % Kursun kontrol noktalarını temsil eden özellik.
-    end
-
-    methods
-        function c = course(name, lvl, waypts)
-            % Bu kurucu işlev, bir kurs nesnesi oluşturur.
-            % Parametreler:
-            %   - name: Kursun adı
-            %   - lvl: Kursun seviyesi (White, Yellow, Green, Orange, Red)
-            %   - waypts: Kursun kontrol noktaları
-            if (nargin == 3)
-                c.Name = name;
-                c.Level = lvl;
-                c.Waypoints = waypts;
-            elseif (nargin > 0)
+            elseif (nargin > 0) % Hata işleviyle özel hata mesajları oluşturabilirsiniz.
                 error("You need to provide 3 inputs: name, level, and a list of waypoints")
             end
+            end
         end
 
-        function ok = checkWaypoint(c, id, wayptidx)
-            % Bu metot, belirli bir kontrol noktasının kontrolünü sağlar.
-            % Parametreler:
-            %   - id: Kursa ait bir kimlik çubuğu nesnesi
-            %   - wayptidx: Kontrol noktasının indeksi
-            % Kimlik çubuğunun geçiş zaman damgalarından önceki kontrol noktasının
-            % indeksini alır ve belirli bir kontrol noktasının geçerli olup olmadığını kontrol eder.
-            [~, prevwpidx] = max(id.Timestamps);
-            ok = (wayptidx == (1 + prevwpidx));
+        function ok = checkWaypoint(c,id,wayptidx)
+            % Bir önceki Waypointin indexini bulur
+            [~,prevwpidx] = max(id.Timestamps);
+            %  Şunki waypointin bir sonraki waypoint olmasını sağlar
+            ok = (wayptidx == (1+prevwpidx));
         end
+
+%         function disp(c)
+%             str = c.Level + " course '" + c.Name + "' with " + ...
+%                 numel(c.Waypoints) + " waypoints:";
+%             disp(str)
+%             disp(c.Waypoints')
+%         end
     end
+
 end
 
-
-Bu yorum bloğu, course sınıfının özelliklerini (properties) ve sınıfın içinde bulunan kurucu işlevi (constructor method) ve metotları (methods) açıklar. course sınıfı, bir kursu temsil eder ve kursun adını (Name), seviyesini (Level), ve kontrol noktalarını (Waypoints) içerir. Kursun seviyesi belirli bir önek kümesine (White, Yellow, Green, Orange, Red) ait olmalıdır. Ayrıca, kontrol noktaları pozitif ve tam sayı olmalıdır. Sınıfın kurucu işlevi, kursun adını, seviyesini ve kontrol noktalarını alarak bir kurs nesnesi oluşturur. Kurucu işlev, eksik girişlerle çağrıldığında bir hata mesajı döndürür. Metotlar arasında, belirli bir kontrol noktasının kontrolünü sağlayan checkWaypoint metodu bulunur.
-
-
-
-
-% ID Stick class definition
-% Bu sınıf, bir kimlik çubuğunu temsil eder ve kimlik çubuğunun seri numarasını
-% (SerialNumber), durumunu (Status), kayıtlı katılımcısını (Participant), 
-% atanmış olduğu kursu (Course), ve geçiş zaman damgalarını (Timestamps) içerir.
-% Sınıfın kurucu işlevi, bir kimlik çubuğu nesnesi oluşturur ve seri numarasını
-% belirtilen değerle ayarlar. Sınıf, bir katılımcıyı belirli bir kursta kaydetmek,
-% kontrol noktalarını kontrol etmek ve kimlik çubuğunun durumunu güncellemek
-% gibi işlevlere sahiptir. Kimlik çubuğu, bir kontrol noktasını geçtikçe durumu
-% günceller ve bu duruma göre belirli sinyaller (Beep, Beep Beep, Buzz) çıkarır.
-% Sınıfın içinde, durumu kontrol eden updateStatus, kontrol noktalarını
-% kontrol eden checkWaypoint, sinyal üreten signal metotları yer almaktadır.
-
+% ID Stick sınıf tanımı
 classdef idstick
     properties
-        SerialNumber (1,1) uint32        % Kimlik çubuğunun seri numarasını temsil eden özellik.
-        Status (1,1) string              % Kimlik çubuğunun durumunu temsil eden özellik.
-        Participant (1,1) string         % Kimlik çubuğuna kayıtlı katılımcıyı temsil eden özellik.
-        Course (1,1) course               % Kimlik çubuğuna atanmış kursu temsil eden özellik.
-        Timestamps (:,1) datetime       % Geçiş zaman damgalarını temsil eden özellik.
+        SerialNumber
+        Status
+        Participant
+        Course
+        Timestamps
     end
 
     methods
         function id = idstick(snum)
-            % Bu kurucu işlev, bir kimlik çubuğu nesnesi oluşturur ve
-            % seri numarasını belirtilen değerle ayarlar.
-            if (nargin > 0)
-                id.SerialNumber = snum;
-            end
+            id.SerialNumber = snum;
         end
-
+        
         function signal(id,ok)
-            % Bu metot, kimlik çubuğuna bağlı olarak sinyal üretir.
-            % Parametreler:
-            %   - ok: Sinyalin başarılı mı yoksa başarısız mı olduğunu belirten mantıksal değer.
             if ok
                 if (id.Status == "Ready") || (id.Status == "Done")
                     disp("Beep beep")
@@ -1122,247 +744,169 @@ classdef idstick
             end
         end
 
-        function id = register(id, name, course)
-            % Bu metot, bir katılımcıyı belirli bir kursta kaydeder.
-            % Parametreler:
-            %   - name: Kaydedilecek katılımcının adı
-            %   - course: Kimlik çubuğuna atanacak kurs nesnesi
+        function id = register(id,name,course)
             id.Participant = name;
             id.Course = course;
             id.Timestamps = NaT(size(course.Waypoints));
             id.Status = "Ready";
-            signal(id, true)
+            signal(id,true)
         end
 
-        function id = checkWaypoint(id, wayptnum)
-            % Bu metot, bir kontrol noktasını kontrol eder ve kimlik çubuğunun
-            % durumunu günceller.
-            % Parametreler:
-            %   - wayptnum: Kontrol edilecek kontrol noktasının indeksi
+        function id = checkWaypoint(id,wayptnum)
+            % Course objesini çağırır
             c = id.Course;
-            [id, ok, n] = updateStatus(id, wayptnum);
+            % ID Stick öğesini kontrol eder ve günceller
+            % Waypoint bu course nesnesinde varmı diye kontrol eder
+            [id,ok,n] = updateStatus(id,wayptnum);
+            % Waypoint öğesi bulunursa, ID stick durumunu var olarak değiştirir , ve the
+            % waypoint eğer başlamazsa , course methodunu kotnrol için çağırıp
+            % wayppoint kuralların göre başlar. (Waypoint eğer başlarsa
+            % , kontrol edecek daha fazla birşey yoktur.)
             if ok && (n > 1)
-                ok = checkWaypoint(c, id, n);
+                ok = checkWaypoint(c,id,n);
             end
+            % Waypointin ara noktasını günceller.
             id.Timestamps(n) = datetime("now");
-            signal(id, ok)
+            % Kullanıcıya ne işlemi aktarır
+            signal(id,ok)
         end
 
-        function [id, ok, idx] = updateStatus(id, wayptnum)
-            % Bu metot, kimlik çubuğunun durumunu kontrol eder ve günceller.
+        function [id,ok,idx] = updateStatus(id,wayptnum)
+            % Bu nesnedeki waypoint öğesini bulur
             wplist = id.Course.Waypoints;
-            idx = find(wayptnum == wplist, 1, "first");
+            idx = find(wayptnum == wplist,1,"first");
+            % Şuanki Id'sinin ne olduğunu bulur.
             if (id.Status == "Error") || (id.Status == "Done")
+                % Durumu aynı bırakır eğer koşullar geçerli ise
                 ok = false;
             elseif (id.Status == "Ready")
+                % Waypoint başlamaya hazır.
                 if (idx == 1)
+                    % Waypoint başladı
                     id.Status = "Running";
                     ok = true;
                 else
+                    % waypoint başlamadan önce kontrol eder.
                     ok = false;
                 end
             else
+                %  Çalışma esnasında waypointin bu nesnede olup olmadıgına bakar
                 ok = ~isempty(idx);
+                % Waypoint bittiyse iş bitti demektir.
                 if (idx == numel(wplist))
                     id.Status = "Done";
                 end
             end
         end
     end
+
 end
 
+% Kurs Nesnelerinden Bir Vektör Oluşturma
 
-Bu yorum bloğu, idstick sınıfının özelliklerini (properties) ve sınıfın içinde bulunan kurucu işlevi (constructor method) ve metotları (methods) açıklar. idstick sınıfı, bir kimlik çubuğunu temsil eder ve kimlik çubuğunun seri numarasını (SerialNumber), durumunu (Status), kayıtlı katılımcısını (Participant), atanmış olduğu kursu (Course), ve geçiş zaman damgalarını (Timestamps) içerir. Sınıfın kurucu işlevi, bir kimlik çubuğu nesnesi oluşturur ve seri numarasını belirtilen değerle ayarlar. Sınıf, bir katılımcıyı belirli bir kursta kaydetmek, kontrol noktalarını kontrol etmek ve kimlik çubuğunun durumunu güncellemek gibi işlevlere sahiptir. Kimlik çubuğu, bir kontrol noktasını geçtikçe durumu günceller ve bu duruma göre belirli sinyaller (Beep, Beep Beep, Buzz) çıkarır. Sınıfın içinde, durumu kontrol eden updateStatus, kontrol noktalarını kontrol eden checkWaypoint, sinyal üreten signal metotları yer almaktadır.
+% Bu kod ara noktaların vektörlerini tanımlar ve bir rota nesnesi oluşturur.
 
+w1 = [42 123 124 163 168 666];
+w2 = [42 123:127 144:146 666];
+w3 = [42 163:174 666];
+c = course("Family Fun","White",w1)
 
+% MATLAB'ın dizi tabanlı doğasına uygun olarak, bir oryantiring olayını parkur nesnelerinden oluşan bir vektörle simüle etmek mantıklı olacaktır. 
 
+Task 2  
+c(2) = course("Challenge","Orange",w2)
 
-
-% ID Stick class definition
-% Bu sınıf, bir veya birden çok kimlik çubuğunu temsil eder. Her bir kimlik
-% çubuğu, seri numarasını (SerialNumber), durumunu (Status), kayıtlı
-% katılımcısını (Participant), atanmış olduğu kursu (Course) ve geçiş zaman
-% damgalarını (Timestamps) içerir. Sınıfın kurucu işlevi, bir veya birden
-% çok kimlik çubuğu nesnesi oluşturur ve seri numaralarını belirtilen değerlerle
-% ayarlar. Sınıf, bir katılımcıyı belirli bir kursta kaydetmek, kontrol noktalarını
-% kontrol etmek ve kimlik çubuğunun durumunu güncellemek gibi işlevlere sahiptir.
-% Her bir kimlik çubuğu, bir kontrol noktasını geçtikçe durumu günceller ve bu
-% duruma göre belirli sinyaller (Beep, Beep Beep, Buzz) çıkarır. Sınıfın içinde,
-% durumu kontrol eden updateStatus, kontrol noktalarını kontrol eden checkWaypoint,
-% sinyal üreten signal metotları yer almaktadır.
-
-classdef idstick
-    properties
-        SerialNumber (1,1) uint32        % Kimlik çubuğunun seri numarasını temsil eden özellik.
-        Status (1,1) string              % Kimlik çubuğunun durumunu temsil eden özellik.
-        Participant (1,1) string         % Kimlik çubuğuna kayıtlı katılımcıyı temsil eden özellik.
-        Course (1,1) course               % Kimlik çubuğuna atanmış kursu temsil eden özellik.
-        Timestamps (:,1) datetime       % Geçiş zaman damgalarını temsil eden özellik.
-    end
-
-    methods
-        function id = idstick(snum)
-            % Bu kurucu işlev, bir veya birden çok kimlik çubuğu nesnesi oluşturur
-            % ve seri numaralarını belirtilen değerlerle ayarlar.
-            if (nargin > 0)
-                for k = 1:numel(snum)
-                    id(k).SerialNumber = snum(k);
-                end
-            end
-        end
-
-        function signal(id, ok)
-            % Bu metot, kimlik çubuğuna bağlı olarak sinyal üretir.
-            % Parametreler:
-            %   - ok: Sinyalin başarılı mı yoksa başarısız mı olduğunu belirten mantıksal değer.
-            if ok
-                if any(strcmp({id.Status}, "Ready")) || any(strcmp({id.Status}, "Done"))
-                    disp("Beep beep")
-                else
-                    disp("Beep")
-                end
-            else
-                disp("Buzz")
-            end
-        end
-
-        function id = register(id, name, course)
-            % Bu metot, bir katılımcıyı belirli bir kursta kaydeder.
-            % Parametreler:
-            %   - name: Kaydedilecek katılımcının adı
-            %   - course: Kimlik çubuğuna atanacak kurs nesnesi
-            [id.Participant] = deal(name);
-            [id.Course] = deal(course);
-            [id.Timestamps] = deal(NaT(size(course.Waypoints)));
-            [id.Status] = deal("Ready");
-            signal(id, true)
-        end
-
-        function id = checkWaypoint(id, wayptnum)
-            % Bu metot, bir kontrol noktasını kontrol eder ve kimlik çubuğunun
-            % durumunu günceller.
-            % Parametreler:
-            %   - wayptnum: Kontrol edilecek kontrol noktasının indeksi
-            for k = 1:numel(id)
-                c = id(k).Course;
-                [id(k), ok, n] = updateStatus(id(k), wayptnum);
-                if ok && (n > 1)
-                    ok = checkWaypoint(c, id(k), n);
-                end
-                id(k).Timestamps(n) = datetime("now");
-                signal(id(k), ok)
-            end
-        end
-
-        function [id, ok, idx] = updateStatus(id, wayptnum)
-            % Bu metot, kimlik çubuğunun durumunu kontrol eder ve günceller.
-            for k = 1:numel(id)
-                wplist = id(k).Course.Waypoints;
-                idx = find(wayptnum == wplist, 1, "first");
-                if (id(k).Status == "Error") || (id(k).Status == "Done")
-                    ok(k) = false;
-                elseif (id(k).Status == "Ready")
-                    if (idx == 1)
-                        id(k).Status = "Running";
-                        ok(k) = true;
-                    else
-                        ok(k) = false;
-                    end
-                else
-                    ok(k) = ~isempty(idx);
-                    if (idx == numel(wplist))
-                        id(k).Status = "Done";
-                    end
-                end
-            end
-        end
-    end
-end
+*MODULE3.5*:
+% Property erişimi 
 
 
+% Course öğesi oluşturma
+w = [42 123 124 163 168 666];
+
+c = course("Family Fun","White",w)
+
+level = c.Level
+wout = c.Waypoints
+
+But not modified
+
+c.Level = "Yellow"
+
+ID Stick
+id = idstick(12345)
+
+Property access
+sn = id.SerialNumber
+
+id.SerialNumber = 54321
+
+id.Course = course("Shouldn't Be Allowed","Red",5:10)
+
+Methods can still access & modify properties
+id = register(id,"Erik",c)
+
+The Status property can be invisible to the user
+
+s = id.Status
+
+Restrict access to some methods
+
+id = updateStatus(id,124)
 
 
-
+signal(id,false)
 
 % Course class definition
-% Bu sınıf, bir dizi kontrol noktasını temsil eden bir kursu ifade eder. Her
-% bir kurs, adını (Name), seviyesini (Level) ve kontrol noktalarını (Waypoints)
-% içerir. Sınıfın kurucu işlevi, belirtilen değerlerle bir kurs nesnesi oluşturur.
-% Sınıf, kontrol noktalarını kontrol etme (checkWaypoint) ve kurs bilgilerini
-% ekrana yazdırma (disp) yeteneklerine sahiptir. Eğer bir dizi kurs nesnesi
-% oluşturulmuşsa, disp metodu her bir kurs öğesini ayrı ayrı ekrana yazar.
-
 classdef course
-    properties (SetAccess = private)
-        Name (1,1) string                                              % Kursun adını temsil eden özellik.
-        Level (1,1) string {mustBeMember(Level,["White","Yellow","Green","Orange","Red"])} = "White"  % Kursun seviyesini temsil eden özellik.
-        Waypoints (:,1) double {mustBePositive, mustBeInteger}         % Kursun kontrol noktalarını temsil eden özellik.
+    properties (SetAccess = private) % Bu söz dizimi ile properties niteliklerini ayarlayabilirsiniz
+        Name (1,1) string
+        Level (1,1) string {mustBeMember(Level,["White","Yellow","Green","Orange","Red"])} = "White"
+        Waypoints (:,1) double {mustBePositive, mustBeInteger}
     end
 
     methods
-        function c = course(name, lvl, waypts)
-            % Bu kurucu işlev, belirtilen değerlerle bir kurs nesnesi oluşturur.
-            % Parametreler:
-            %   - name: Kursun adı (metin)
-            %   - lvl: Kursun seviyesi (White, Yellow, Green, Orange, Red)
-            %   - waypts: Kursun kontrol noktalarının listesi
-            if nargin == 3
-                % Inputs given -> check them
-                % Name must be text
+        function c = course(name,lvl,waypts)
+            if (nargin == 3)
                 name = convertCharsToStrings(name);
                 if isstring(name)
                     c.Name = name;
                 else
                     error("Name must be text")
                 end
-                % Level (values checked by properties block)
                 c.Level = lvl;
-                % Waypoints must be numeric
                 if isnumeric(waypts)
                     c.Waypoints = waypts;
                 else
                     error("Waypoints must be numeric")
                 end
-            elseif nargin > 0
-                % Inputs given, but not == 3
+            elseif (nargin > 0)
                 error("You need to provide 3 inputs: name, level, and a list of waypoints")
             end
         end
 
-        function ok = checkWaypoint(c, id, wayptidx)
-            % Bu metot, bir kontrol noktasını kontrol eder.
-            % Parametreler:
-            %   - id: İlgili kimlik çubuğu nesnesi
-            %   - wayptidx: Kontrol edilecek kontrol noktasının indeksi
-            % Kontrol noktası geçerli bir kontrol noktası ise ve kimlik çubuğu
-            % durumu uygunsa (Ready veya Done), kontrol başarılı sayılır.
-            % Ayrıca, kontrol noktasının sıralı olup olmadığı da kontrol edilir.
-            [~, prevwpidx] = max(id.Timestamps);
-            ok = (wayptidx == (1 + prevwpidx));
+        function ok = checkWaypoint(c,id,wayptidx)
+
+            [~,prevwpidx] = max(id.Timestamps);
+            % Current waypoint should be the next one
+            ok = (wayptidx == (1+prevwpidx));
         end
 
         function disp(c)
-            % Bu metot, kurs bilgilerini ekrana yazdırır.
             n = numel(c);
             isarray = (n > 1);
-            % Dizi ise, bilgi ekranında dizi olduğuna dair bilgi eklenir.
             if isarray
-                disp("Array of " + n + " courses" + newline)
+                disp("Array of "+n+" courses"+newline)
             end
-            % Her bir kurs öğesi için ekrana bilgi yazdırılır.
             for k = 1:n
-                % Dizi ise, her bir öğe için öğe numarası eklenir.
                 if isarray
-                    str = string(k) + ") ";
+                    str = string(k)+") ";
                 else
                     str = "";
                 end
-                % Kontrol noktası olup olmadığı kontrol edilir.
                 if isempty(c(k).Waypoints)
-                    str = str + "Empty course";  % Boş kurs
+                    str = str + "Empty course";
                     disp(str)
                 else
-                    % Kurs bilgileri ekranına eklenir.
                     str = str + c(k).Level + " course '" + c(k).Name + ...
                         "' with " + numel(c(k).Waypoints) + " waypoints:";
                     disp(str)
@@ -1371,36 +915,31 @@ classdef course
             end
         end
     end
+
 end
 
-
-
-
-% ID Stick class definition
-% Bu sınıf, bir dizi kimlik çubuğunu temsil eder. Her bir kimlik çubuğu,
-% bir seri numarasını (SerialNumber), bir durumunu (Status), bir katılımcısını
-% (Participant), bir kursu (Course), ve kontrol noktalarındaki zaman damgalarını
-% (Timestamps) içerir. Sınıf, bir dizi kimlik çubuğu oluşturmak için kullanılabilir.
-% Ayrıca, bir kimlik çubuğunu kaydetme (register), bir kontrol noktasını kontrol etme
-% (checkWaypoint), ve bilgileri ekrana yazdırma (disp) yeteneklerine sahiptir.
-
+% ID Stick sınıfı tanımlaması
 classdef idstick
-    properties (SetAccess = private)
-        SerialNumber (1,1) uint32         % Kimlik çubuğunun seri numarasını temsil eden özellik.
-        Status (1,1) string               % Kimlik çubuğunun durumunu temsil eden özellik.
-        Participant (1,1) string          % Kimlik çubuğunun katılımcısını temsil eden özellik.
-        Course (1,1) course               % Kimlik çubuğunun ait olduğu kursu temsil eden özellik.
-        Timestamps (:,1) datetime        % Kimlik çubuğunun kontrol noktalarındaki zaman damgalarını temsil eden özellik.
+    properties (SetAccess = immutable) % Genellikle farklı propertiesler için farklı erişim düzeyleri isteyeceksiniz. Her biri kendi öznitelik ayarlarına sahip, ihtiyaç duyduğunuz kadar çok özellik bloğuna sahip olabilirsiniz.
+        SerialNumber (1,1) uint32
+    end
+    properties (Access = private) % Access niteliğini özel yapmak, bu özelliklerin aslında kullanıcı tarafından görülemeyeceği anlamına gelir. Bu, bir iç durumu temsil eden özellikler için yararlı olabilir.
+        Status (1,1) string
+    end
+    properties (SetAccess = private) % Bu söz dizimi ile properties niteliklerini ayarlayabilirsiniz:
+        SerialNumber (1,1) uint32
+        Status (1,1) string
+        Participant (1,1) string
+        Course (1,1) course
+        Timestamps (:,1) datetime
     end
 
     methods
         function id = idstick(snum)
             if (nargin > 0)
-                % Verilen seri numarası(lar)ın özelliklerini kontrol et
                 mustBeNumeric(snum)
                 mustBeInteger(snum)
                 mustBePositive(snum)
-                % Nesne dizisini oluştur
                 for k = 1:numel(snum)
                     id(k).SerialNumber = snum(k);
                 end
@@ -1409,15 +948,12 @@ classdef idstick
 
         function disp(id)
             for k = 1:numel(id)
-                % Görüntüleme dizgisini oluştur
                 str = "ID stick #" + id(k).SerialNumber;
-                % Katılımcı bilgisi eklenirse
                 if (id(k).Participant == "")
                     str = str + " which is not yet registered";
                     disp(str)
                 else
                     str = str + " is registered to " + id(k).Participant + " who is ";
-                    % Durumu kullanarak doğru ifadeyi al
                     switch id(k).Status
                         case "Ready"
                             str = str + "ready to run";
@@ -1426,170 +962,25 @@ classdef idstick
                         case "Done"
                             str = str + "finished with";
                     end
-                    % Dizgiyi görüntüle, ardından kurs bilgilerini görüntüle
                     disp(str)
                     disp(id(k).Course)
                 end
             end
         end
 
-        function signal(id, ok)
-            for k = 1:numel(id)
-                if ok
-                    if (id(k).Status == "Ready") || (id(k).Status == "Done")
-                        disp("Beep beep")
-                    else
-                        disp("Beep")
-                    end
+        function signal(id,ok)
+            if ok
+                if (id.Status == "Ready") || (id.Status == "Done")
+                    disp("Beep beep")
                 else
-                    disp("Buzz")
+                    disp("Beep")
                 end
+            else
+                disp("Buzz")
             end
         end
 
-        function id = register(id, name, c)
-            arguments
-                id (1,1) idstick
-                name (1,1) string
-                c (1,1) course
-            end
-            for k = 1:numel(id)
-                id(k).Participant = name;
-                id(k).Course = c;
-                id(k).Timestamps = NaT(size(c.Waypoints));
-                id(k).Status = "Ready";
-                signal(id(k), true)
-            end
-        end
-
-        function id = checkWaypoint(id, wayptnum)
-            arguments
-                id (1,1) idstick
-                wayptnum (1,1) double
-            end
-            for k = 1:numel(id)
-                % Kurs nesnesini al
-                c = id(k).Course;
-                % Kimlik çubuğu durumunu kontrol et ve güncelle
-                % Bu kontrol noktasının bu kursta olup olmadığını kontrol et
-                [id(k), ok, n] = updateStatus(id(k), wayptnum);
-                % Eğer kontrol noktası geçerli ise, kimlik çubuğu durumu uygunsa
-                % ve kontrol noktası başlangıç değilse, kurs yöntemini kullanarak
-                % bu kontrol noktasını kurallara göre kontrol et. (Eğer bu kontrol
-                % noktası başlangıçsa, kontrol etmek için başka bir şey yoktur.)
-                if ok && (n > 1)
-                    ok = checkWaypoint(c, id(k), n);
-                end
-                % Bu kontrol noktasının zaman damgasını güncelle
-                id(k).Timestamps(n) = datetime("now");
-                % Katılımcıya ne olduğunu söyle
-                signal(id(k), ok)
-            end
-        end
-
-        function [id, ok, idx] = updateStatus(id, wayptnum)
-            for k = 1:numel(id)
-                % Bu kurstaki kontrol noktalarını al
-                wplist = id(k).Course.Waypoints;
-                % Verilen kontrol noktasını bu kursun listesinde bul
-                idx = find(wayptnum == wplist, 1, "first");
-                % Şu anki Kimlik Çubuğu durumu nedir?
-                if (id(k).Status == "Error") || (id(k).Status == "Done")
-                    % Durumu değiştirmeyin, bu check-in başarısız
-                    ok = false;
-                elseif (id(k).Status == "Ready")
-                    % Başlamaya hazır. Bu kontrol noktasının başlangıç noktası olup
-                    % olmadığını kontrol et
-                    if (idx == 1)
-                        % Tamam, başlayalım!
-                        id(k).Status = "Running";
-                        ok = true;
-                    else
-                        % Başlamadan önce daha sonraki bir kontrol noktasına check-in
-                        ok = false;
-                    end
-                else
-                    % Devam ediyor. Bu kontrol noktasının bu kursun listesinde
-                    % olup olmadığını kontrol et
-                    ok = ~isempty(idx);
-                    % Eğer bu kontrol noktası bitişse, işimiz bitti
-                    if (idx == numel(wplist))
-                        id(k).Status = "Done";
-                    end
-                end
-            end
-        end
-    end
-end
-
-
-Bu MATLAB sınıfı, bir dizi kimlik çubuğunu temsil eder. Her bir kimlik çubuğu, bir seri numarasını, bir durumunu, bir katılımcısını, bir kursu ve kontrol noktalarındaki zaman damgalarını içerir. Sınıf, bir dizi kimlik çubuğunu oluşturmak, bir kimlik çubuğunu kaydetmek, bir kontrol noktasını kontrol etmek ve bilgileri ekrana yazdırmak için kullanılabilir.
-
-
-
-
-% ID Stick class definition
-% Bu sınıf, bir dizi kimlik çubuğunu temsil eder. Her bir kimlik çubuğu, bir seri
-% numarasını (SerialNumber), bir durumunu (Status), bir katılımcısını
-% (Participant), bir kursu (Course), ve kontrol noktalarındaki zaman damgalarını
-% (Timestamps) içerir. Sınıf, bir dizi kimlik çubuğunu oluşturmak, bir kimlik
-% çubuğunu kaydetmek, bir kontrol noktasını kontrol etmek ve bilgileri ekrana
-% yazdırmak için kullanılabilir.
-
-classdef idstick
-    properties (SetAccess = immutable)
-        SerialNumber (1,1) uint32   % Kimlik çubuğunun seri numarasını temsil eden özellik.
-    end
-    properties (Access = private)
-        Status (1,1) string         % Kimlik çubuğunun durumunu temsil eden özellik.
-    end
-    properties (SetAccess = private)
-        Participant (1,1) string    % Kimlik çubuğunun katılımcısını temsil eden özellik.
-        Course (1,1) course         % Kimlik çubuğunun ait olduğu kursu temsil eden özellik.
-        Timestamps (:,1) datetime  % Kimlik çubuğunun kontrol noktalarındaki zaman damgalarını temsil eden özellik.
-    end
-
-    methods
-        function id = idstick(snum)
-            if (nargin > 0)
-                % Verilen seri numarası(lar)ın özelliklerini kontrol et
-                mustBeNumeric(snum)
-                mustBeInteger(snum)
-                mustBePositive(snum)
-                % Nesne dizisini oluştur
-                for k = 1:numel(snum)
-                    id(k).SerialNumber = snum(k);
-                end
-            end
-        end
-
-        function disp(id)
-            for k = 1:numel(id)
-                % Görüntüleme dizgisini oluştur
-                str = "ID stick #" + id(k).SerialNumber;
-                % Katılımcı bilgisi eklenirse
-                if (id(k).Participant == "")
-                    str = str + " which is not yet registered";
-                    disp(str)
-                else
-                    str = str + " is registered to " + id(k).Participant + " who is ";
-                    % Durumu kullanarak doğru ifadeyi al
-                    switch id(k).Status
-                        case "Ready"
-                            str = str + "ready to run";
-                        case "Running"
-                            str = str + "running";
-                        case "Done"
-                            str = str + "finished with";
-                    end
-                    % Dizgiyi görüntüle, ardından kurs bilgilerini görüntüle
-                    disp(str)
-                    disp(id(k).Course)
-                end
-            end
-        end
-
-        function id = register(id, name, c)
+        function id = register(id,name,c)
             arguments
                 id (1,1) idstick
                 name (1,1) string
@@ -1599,38 +990,28 @@ classdef idstick
             id.Course = c;
             id.Timestamps = NaT(size(c.Waypoints));
             id.Status = "Ready";
-            signal(id, true)
+            signal(id,true)
         end
 
-        function id = checkWaypoint(id, wayptnum)
+        function id = checkWaypoint(id,wayptnum)
             arguments
                 id (1,1) idstick
                 wayptnum (1,1) double
             end
-            % Get the course object
             c = id.Course;
-            % Check and update ID stick status
-            % Check that this waypoint is on this course
-            [id,ok,n] = updateStatus(id, wayptnum);
-            % If the waypoint is valid, the ID stick status is ok, and the
-            % waypoint is not the start, use the course method to check
-            % this waypoint according to the rules of the course. (If this
-            % waypoint is the start, there's nothing more to check.)
+            [id,ok,n] = updateStatus(id,wayptnum);
             if ok && (n > 1)
-                ok = checkWaypoint(c, id, n);
+                ok = checkWaypoint(c,id,n);
             end
-            % Update the time stamp of this waypoint
             id.Timestamps(n) = datetime("now");
-            % Tell the participant what happened
-            signal(id, ok)
+            signal(id,ok)
         end
     end
     
-    methods (Access = private)
-        function signal(id, ok)
-            for k = 1:numel(id)
+         methods (Access = private) % Özelliklerde olduğu gibi, kullanıcılarınızın onlarla nasıl etkileşimde bulunabileceğini kontrol etmek için yöntemlerinizin niteliklerini ayarlayabilirsiniz.
+            function signal(id,ok)
                 if ok
-                    if (id(k).Status == "Ready") || (id(k).Status == "Done")
+                    if (id.Status == "Ready") || (id.Status == "Done")
                         disp("Beep beep")
                     else
                         disp("Beep")
@@ -1639,47 +1020,27 @@ classdef idstick
                     disp("Buzz")
                 end
             end
-        end
 
-        function [id,ok,idx] = updateStatus(id, wayptnum)
-            for k = 1:numel(id)
-                % Bu kurstaki kontrol noktalarını al
-                wplist = id(k).Course.Waypoints;
-                % Verilen kontrol noktasını bu kursun listesinde bul
-                idx = find(wayptnum == wplist, 1, "first");
-                % Şu anki Kimlik Çubuğu durumu nedir?
-                if (id(k).Status == "Error") || (id(k).Status == "Done")
-                    % Durumu değiştirmeyin, bu check-in başarısız
-                    ok = false;
-                elseif (id(k).Status == "Ready")
-                    % Başlamaya hazır. Bu kontrol noktasının başlangıç noktası olup
-                    % olmadığını kontrol et
-                    if (idx == 1)
-                        % Tamam, başlayalım!
-                        id(k).Status = "Running";
-                        ok = true;
-                    else
-                        % Başlamadan önce daha sonraki bir kontrol noktasına check-in
-                        ok = false;
-                    end
+        function [id,ok,idx] = updateStatus(id,wayptnum)
+            wplist = id.Course.Waypoints;
+            idx = find(wayptnum == wplist,1,"first");
+            if (id.Status == "Error") || (id.Status == "Done")
+                ok = false;
+            elseif (id.Status == "Ready")
+                if (idx == 1)
+                    id.Status = "Running";
+                    ok = true;
                 else
-                    % Devam ediyor. Bu kontrol noktasının bu kursun listesinde
-                    % olup olmadığını kontrol et
-                    ok = ~isempty(idx);
-                    % Eğer bu kontrol noktası bitişse, işimiz bitti
-                    if (idx == numel(wplist))
-                        id(k).Status = "Done";
-                    end
+                    ok = false;
+                end
+            else
+                ok = ~isempty(idx);
+                if (idx == numel(wplist))
+                    id.Status = "Done";
                 end
             end
         end
     end
-
 end
 
-
-
-Bu MATLAB sınıfı, bir dizi kimlik çubuğunu temsil eder. Her bir kimlik çubuğu, bir seri numarasını, bir durumunu, bir katılımcısını, bir kursu ve kontrol noktalarındaki zaman damgalarını içerir. Sınıf, bir dizi kimlik çubuğunu oluşturmak, bir kimlik çubuğunu kaydetmek, bir kontrol noktasını kontrol etmek ve bilgileri ekrana yazdırmak için kullanılabilir. Sınıf, "Ready" durumunda olan bir katılımcının bir kontrol noktasına check-in yapmasını yönetir, katılımcının kursu üzerinde ilerlemesini takip eder ve ilgili duruma göre sesli uyarılar yapabilir.
-
-
-
+end
